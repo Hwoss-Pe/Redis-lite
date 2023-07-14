@@ -22,6 +22,7 @@ public class CommandExtract {
         for (int i = 1; i < strings.length; i++) {
             argList.add(strings[i]);
         }
+        newString = newString.toUpperCase();
         newString = "Command."+newString+"Command";
         Class<?> aClass = null;
         try {

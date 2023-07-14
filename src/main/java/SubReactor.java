@@ -1,4 +1,6 @@
 import Command.Command;
+import HashMapControl.SHHashMap;
+import HashMapControl.SLHashMap;
 import HashMapControl.SSHashMap;
 import Io.MultiWriteHandler;
 
@@ -8,6 +10,7 @@ import java.nio.channels.*;
 import java.nio.channels.spi.SelectorProvider;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,9 +21,12 @@ class SubReactor {
     private ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     public SubReactor() throws IOException, ClassNotFoundException {
-//        开机的时候读取三个文件里面的哈希
+//        开机的时候读取三个文件里面的哈希并且存储到相应的类
         HashMap<String, String> hm = SSHashMap.input();
-        System.out.println(hm);
+        HashMap<String, LinkedList<String>> hml = SLHashMap.input();
+        HashMap<String, HashMap<String, String>> hmh = SHHashMap.input();
+//        System.out.println(hm);
+        System.out.println(hml);
         try {
             selector = SelectorProvider.provider().openSelector();
             stop = false;
@@ -127,6 +133,7 @@ class SubReactor {
 
 
                             SSHashMap.output(hm);
+
 
 
                         } catch (IOException e) {

@@ -3,7 +3,7 @@ package Command;
         import HashMapControl.SSHashMap;
         import java.util.HashMap;
         import java.util.List;
-public class delCommand implements Command {
+public class DELCommand implements Command {
     //    删除的本质上设置key的value等于null
     private List<String> setArgs;
     @Override
@@ -11,11 +11,11 @@ public class delCommand implements Command {
         this.setArgs = list;
     }
 
-    public delCommand(List<String> setArgs) {
+    public DELCommand(List<String> setArgs) {
         this.setArgs = setArgs;
     }
 
-    public delCommand() {
+    public DELCommand() {
     }
 
     @Override

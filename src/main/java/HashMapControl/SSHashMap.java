@@ -42,16 +42,16 @@ public class SSHashMap {
                 try {
                     boolean created = file.createNewFile();
                     if (created) {
-                        System.out.println("文件创建成功。");
+                        System.out.println("Data文件创建成功。");
                         if (hm != null) {
                             oos.writeObject(hm);
                             oos.flush();
                         }
                     } else {
-                        System.out.println("创建文件失败");
+                        System.out.println("Data创建文件失败");
                     }
                 } catch (IOException e) {
-                    System.out.println("创建文件时出现异常：" + e.getMessage());
+                    System.out.println("Data创建文件时出现异常：" + e.getMessage());
                 }
             }
         }

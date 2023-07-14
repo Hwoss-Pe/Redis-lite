@@ -5,18 +5,18 @@ import HashMapControl.SSHashMap;
 import java.util.HashMap;
 import java.util.List;
 
-public class getCommand implements Command {
+public class GETCommand implements Command {
     private List<String> setArgs;
     @Override
     public void setArgs(List<String> list) {
         this.setArgs = list;
     }
 
-    public getCommand(List<String> setArgs) {
+    public GETCommand(List<String> setArgs) {
         this.setArgs = setArgs;
     }
 
-    public getCommand() {
+    public GETCommand() {
     }
 
     @Override
