@@ -1,3 +1,4 @@
+import javax.sound.sampled.Port;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -10,8 +11,8 @@ import java.util.Scanner;
 
 public class GroupChatClient {
     //定义相关的属性
-    private final String HOST = "127.0.0.1"; // 服务器的ip
-    private final int PORT = 10086; //服务器端口
+    private static final String HOST = "127.0.0.1"; // 服务器的ip
+    private static  final int PORT = 10086; //服务器端口
     private Selector selector;
     private SocketChannel socketChannel;
     private String username;
@@ -94,6 +95,7 @@ public class GroupChatClient {
         //发送数据给服务器端
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
+            System.out.println(HOST+":"+ PORT+">");
             String s = scanner.nextLine();
             chatClient.sendInfo(s);
         }
