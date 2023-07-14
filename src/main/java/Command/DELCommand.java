@@ -22,6 +22,7 @@ public class DELCommand implements Command {
     public void execute() {
         if(setArgs.size()<1){
             MultiWriteHandler.setClient("至少需要两个参数");
+            return;
         }
         String key = setArgs.get(0);
         System.out.println("此时运行的是del命令");

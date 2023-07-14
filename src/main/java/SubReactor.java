@@ -26,7 +26,8 @@ class SubReactor {
         HashMap<String, LinkedList<String>> hml = SLHashMap.input();
         HashMap<String, HashMap<String, String>> hmh = SHHashMap.input();
 //        System.out.println(hm);
-        System.out.println(hml);
+//        System.out.println(hml);
+        System.out.println(hmh);
         try {
             selector = SelectorProvider.provider().openSelector();
             stop = false;
@@ -127,12 +128,16 @@ class SubReactor {
                             command.execute();
                         }
                         HashMap<String, String> hm = SSHashMap.getSSHashMap();
+                        HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
+                        HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
                         try {
 //                            这里的设置就是从客户端收到信息后就直接写入，这里后续改成定时任务
 
 
 
                             SSHashMap.output(hm);
+                            SLHashMap.output(hml);
+                            SHHashMap.output(hmh);
 
 
 

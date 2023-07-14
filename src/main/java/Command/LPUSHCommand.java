@@ -24,8 +24,10 @@ public class LPUSHCommand implements Command{
 
     @Override
     public void execute() {
-        if(setArgs.size()<=1){
+        if(setArgs.size()<=1) {
             MultiWriteHandler.setClient("至少需要两个参数");
+            return;
+        }
             System.out.println("此时运行的是lpush命令");
             HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
             String key = setArgs.get(0);
@@ -39,6 +41,6 @@ public class LPUSHCommand implements Command{
             }
             hml.put(key,linkedList);
             SLHashMap.setHml(hml);
-        }
+            MultiWriteHandler.setClient("1");
     }
 }

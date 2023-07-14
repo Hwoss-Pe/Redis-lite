@@ -54,7 +54,7 @@ public class SHHashMap {
     public static HashMap<String,HashMap<String,String>> getSHHashMap(){
         return hmh;
     }
-    public static void setHml(HashMap<String,HashMap<String,String>> shHashMap) {
+    public static void setHmh(HashMap<String,HashMap<String,String>> shHashMap) {
         hmh = shHashMap;
     }
 }

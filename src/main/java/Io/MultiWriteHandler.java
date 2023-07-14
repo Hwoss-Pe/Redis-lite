@@ -54,10 +54,6 @@ public class MultiWriteHandler {
 
 
     public static void setClient(String message) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(new Runnable() {
-            @Override
-            public void run() {
                     SocketChannel channel = (SocketChannel) key.channel();
                 try {
                     Charset charset = Charset.forName("GBK");
@@ -65,8 +61,5 @@ public class MultiWriteHandler {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-            }
-        });
     }
 }

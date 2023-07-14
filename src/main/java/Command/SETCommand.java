@@ -22,11 +22,12 @@ public class SETCommand implements Command {
     @Override
     public void execute() {
         if(setArgs.size()<=1){
-            MultiWriteHandler.setClient("è‡³å°‘éœ€è¦ä¸¤ä¸ªå‚æ•°");
+            MultiWriteHandler.setClient("ÖÁÉÙÐèÒªÁ½¸ö²ÎÊý");
+            return;
         }
         String key = setArgs.get(0);
         String value = setArgs.get(1);
-        System.out.println("æ­¤æ—¶è¿è¡Œçš„æ˜¯setå‘½ä»¤");
+        System.out.println("´ËÊ±ÔËÐÐµÄÊÇsetÃüÁî");
         HashMap<String, String> hm = SSHashMap.getSSHashMap();
         hm.put(key, value);
         SSHashMap.setHm(hm);
