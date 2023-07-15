@@ -7,14 +7,13 @@ import java.util.List;
 public class CommandExtract {
 //    执行把输入的东西解析
     public Command Extract(String userInput)  {
-        List<String> argList = new ArrayList<>();
         String[] split = userInput.split("说：");
-        //这里得到的才是输入的值
-//        try{
-//
-//        }catch(ArrayIndexOutOfBoundsException e){
-//
-//        }
+        return Command(split);
+//        注意返回的指令对象可能不存在，也就是错误的指令的时候
+    }
+
+    public Command Command (String[] split) {
+        List<String> argList = new ArrayList<>();
         String[] s = split[1].split(" ");
         String newString = s[0].trim();
         String[] strings =split[1].split("\\s+");
@@ -28,7 +27,6 @@ public class CommandExtract {
         try {
             aClass = Class.forName(newString);
             if(Command.class.isAssignableFrom(aClass)){
-//                MultiWriteHandler.setClient("命令执行"+"\n");
                 try {
 //        如果是有效的命令，那么解析来就是创建对象并且传入参数
                     Command command = (Command) aClass.getDeclaredConstructor().newInstance();
@@ -42,6 +40,5 @@ public class CommandExtract {
             MultiWriteHandler.setClient("输入的命令错误");
         }
         return null;
-//        注意返回的指令对象可能不存在，也就是错误的指令的时候
     }
 }

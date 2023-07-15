@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class SSHashMap {
-    static String HashMapAddress = "..\\Test444\\Datas.property";
+    static String HashMapAddress = "..\\Test444\\Datas1.bin";
     static  HashMap<String, String> hm = null;
 
     public static HashMap<String, String> input() throws IOException, ClassNotFoundException {

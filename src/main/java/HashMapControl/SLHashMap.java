@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class SLHashMap {
-    static String SLHashMapAddress = "..\\Test444\\Datas2.property";
+    static String SLHashMapAddress = "..\\Test444\\Datas2.bin";
     static HashMap<String, LinkedList<String>> hml = null;
     public static HashMap<String, LinkedList<String>> input() throws IOException, ClassNotFoundException {
         File file = new File(SLHashMapAddress);

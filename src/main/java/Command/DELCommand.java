@@ -20,12 +20,12 @@ public class DELCommand implements Command {
 
     @Override
     public void execute() {
+        System.out.println("此时运行的是del命令");
         if(setArgs.size()<1){
-            MultiWriteHandler.setClient("至少需要两个参数");
+            MultiWriteHandler.setClient("至少需要一个参数");
             return;
         }
         String key = setArgs.get(0);
-        System.out.println("此时运行的是del命令");
         HashMap<String, String> hm = SSHashMap.getSSHashMap();
         hm.put(key, null);
         MultiWriteHandler.setClient("删除该key的value成功");

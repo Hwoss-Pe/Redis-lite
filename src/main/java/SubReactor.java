@@ -1,4 +1,5 @@
 import Command.Command;
+import HashMapControl.HashsetMap;
 import HashMapControl.SHHashMap;
 import HashMapControl.SLHashMap;
 import HashMapControl.SSHashMap;
@@ -8,10 +9,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.nio.channels.spi.SelectorProvider;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,9 +23,11 @@ class SubReactor {
         HashMap<String, String> hm = SSHashMap.input();
         HashMap<String, LinkedList<String>> hml = SLHashMap.input();
         HashMap<String, HashMap<String, String>> hmh = SHHashMap.input();
+        HashMap<String, HashSet<String>> hms = HashsetMap.input();
         System.out.println(hm);
         System.out.println(hml);
         System.out.println(hmh);
+        System.out.println(hms);
         try {
             selector = SelectorProvider.provider().openSelector();
             stop = false;
@@ -127,16 +127,9 @@ class SubReactor {
                         if (command!=null) {
                             command.execute();
                         }
-                        HashMap<String, String> hm = SSHashMap.getSSHashMap();
-                        HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
-                        HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
-
-//                        try {
-//                            SSHashMap.output(hm);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//
+//                        HashMap<String, String> hm = SSHashMap.getSSHashMap();
+//                        HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
+//                        HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
 
 //                        这里可以设置实时保存
                         System.out.println("-----------------------------------------------------------");
