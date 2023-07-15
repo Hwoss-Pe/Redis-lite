@@ -25,9 +25,6 @@ class SubReactor {
         HashMap<String, String> hm = SSHashMap.input();
         HashMap<String, LinkedList<String>> hml = SLHashMap.input();
         HashMap<String, HashMap<String, String>> hmh = SHHashMap.input();
-//        System.out.println(hm);
-//        System.out.println(hml);
-        System.out.println(hmh);
         try {
             selector = SelectorProvider.provider().openSelector();
             stop = false;

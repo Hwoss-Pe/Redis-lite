@@ -1,9 +1,11 @@
+import Time.AutoSave;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.Iterator;
-import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 class GroupChatServer{
     //定义属性
@@ -95,7 +97,18 @@ class GroupChatServer{
         //创建服务器对象
         GroupChatServer groupChatServer = new GroupChatServer();
         groupChatServer.addSub(new SubReactor());
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                AutoSave autoSave = new AutoSave();
+                autoSave.execute();
+            }
+        };
+        // 在程序启动后延迟两秒钟执行定时任务，然后每隔一分钟执行一次
+        timer.schedule(task, 2000, 60*1000);
         groupChatServer.listen();
+
     }
 }
 

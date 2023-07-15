@@ -54,8 +54,8 @@ public class MultiWriteHandler {
 
 
     public static void setClient(String message) {
-                    SocketChannel channel = (SocketChannel) key.channel();
                 try {
+                    SocketChannel channel = (SocketChannel) key.channel();
                     Charset charset = Charset.forName("GBK");
                     channel.write(charset.encode(message));
                 } catch (IOException e) {
