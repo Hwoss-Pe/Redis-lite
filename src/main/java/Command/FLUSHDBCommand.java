@@ -21,7 +21,7 @@ public class FLUSHDBCommand implements Command{
         try {
             HashMap<String, String> hm = SSHashMap.input();
             HashMap<String, LinkedList<String>> hml = SLHashMap.input();
-            HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
+            HashMap<String, HashMap<String, String>> hmh = SHHashMap.input();
             SSHashMap.setHm(hm);
             SLHashMap.setHml(hml);
             SHHashMap.setHmh(hmh);

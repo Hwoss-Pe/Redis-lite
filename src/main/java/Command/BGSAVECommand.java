@@ -21,14 +21,14 @@ public class BGSAVECommand implements Command {
     public void execute() {
         Thread saveThread = new Thread(() -> {
             try {
-                HashMap<String, String> hm = SSHashMap.input();
-                HashMap<String, LinkedList<String>> hml = SLHashMap.input();
+                HashMap<String, String> hm = SSHashMap.getSSHashMap();
+                HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
                 HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
                 SSHashMap.output(hm);
                 SLHashMap.output(hml);
                 SHHashMap.output(hmh);
                 MultiWriteHandler.setClient("后台保存成功");
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 MultiWriteHandler.setClient("后台保存失败");
             }

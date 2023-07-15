@@ -18,17 +18,21 @@ public class SAVECommand implements Command {
 
     }
 
+    public SAVECommand() {
+    }
+
     @Override
     public void execute() {
+        System.out.println("此时运行的是save命令");
         try {
-            HashMap<String, String> hm = SSHashMap.input();
-            HashMap<String, LinkedList<String>> hml = SLHashMap.input();
+            HashMap<String, String> hm = SSHashMap.getSSHashMap();
+            HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
             HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
             SSHashMap.output(hm);
             SLHashMap.output(hml);
             SHHashMap.output(hmh);
             MultiWriteHandler.setClient("保存成功");
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             MultiWriteHandler.setClient("保存失败");
         }

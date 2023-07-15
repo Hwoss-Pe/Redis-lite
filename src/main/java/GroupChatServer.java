@@ -1,4 +1,5 @@
 import Time.AutoSave;
+import Time.delayHash;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -97,6 +98,7 @@ class GroupChatServer{
         //创建服务器对象
         GroupChatServer groupChatServer = new GroupChatServer();
         groupChatServer.addSub(new SubReactor());
+        delayHash delayHash = new delayHash();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override

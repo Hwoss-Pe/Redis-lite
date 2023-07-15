@@ -54,6 +54,7 @@ public class SSHashMap {
                     System.out.println("Data创建文件时出现异常：" + e.getMessage());
                 }
             }
+                 oos.close();
         }
         public static HashMap<String,String> getSSHashMap(){
                 return hm;
