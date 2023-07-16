@@ -31,6 +31,7 @@ public class SETCommand implements Command {
         HashMap<String, String> hm = SSHashMap.getSSHashMap();
         hm.put(key, value);
         SSHashMap.setHm(hm);
+        MultiWriteHandler.setClient("1");
     }
 
 }

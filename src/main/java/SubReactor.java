@@ -3,8 +3,9 @@ import HashMapControl.HashsetMap;
 import HashMapControl.SHHashMap;
 import HashMapControl.SLHashMap;
 import HashMapControl.SSHashMap;
+import Io.InputCheck2;
 import Io.MultiWriteHandler;
-
+import Command.CommandExtract;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
@@ -19,15 +20,8 @@ class SubReactor {
     private ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     public SubReactor() throws IOException, ClassNotFoundException {
-//        开机的时候读取三个文件里面的哈希并且存储到相应的类
-        HashMap<String, String> hm = SSHashMap.input();
-        HashMap<String, LinkedList<String>> hml = SLHashMap.input();
-        HashMap<String, HashMap<String, String>> hmh = SHHashMap.input();
-        HashMap<String, HashSet<String>> hms = HashsetMap.input();
-        System.out.println(hm);
-        System.out.println(hml);
-        System.out.println(hmh);
-        System.out.println(hms);
+
+        InputCheck2.input();
         try {
             selector = SelectorProvider.provider().openSelector();
             stop = false;
@@ -124,14 +118,9 @@ class SubReactor {
                         System.out.println("从客户端收到: " + msg);
                         CommandExtract commandExtract   = new CommandExtract();
                         Command command = commandExtract.Extract(msg);
-                        if (command!=null) {
-                            command.execute();
-                        }
-//                        HashMap<String, String> hm = SSHashMap.getSSHashMap();
-//                        HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
-//                        HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
-
-//                        这里可以设置实时保存
+//                        if (command!=null) {
+//                            command.execute();
+//                        }
                         System.out.println("-----------------------------------------------------------");
                     }
                 }

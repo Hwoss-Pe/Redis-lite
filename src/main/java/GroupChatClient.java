@@ -1,3 +1,5 @@
+import Io.properties;
+
 import javax.sound.sampled.Port;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -11,25 +13,28 @@ import java.util.Scanner;
 
 public class GroupChatClient {
     //定义相关的属性
-    private static final String HOST = "127.0.0.1"; // 服务器的ip
-    private static  final int PORT = 10086; //服务器端口
+    private static  String HOST ; // 服务器的ip
+    private static   int PORT ; //服务器端口
     private Selector selector;
     private SocketChannel socketChannel;
     private String username;
 
     //构造器, 完成初始化工作
     public GroupChatClient() throws IOException {
+        HOST = properties.property("HOST");
+        String PORTStr = properties.property("PORT");
+        PORT = Integer.parseInt(PORTStr);
 
         selector = Selector.open();
         //连接服务器
-        socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", PORT));
+        socketChannel = SocketChannel.open(new InetSocketAddress(HOST, PORT));
         //设置非阻塞
         socketChannel.configureBlocking(false);
         //将channel 注册到selector
         socketChannel.register(selector, SelectionKey.OP_READ);
         //得到username
         username = socketChannel.getLocalAddress().toString().substring(1);
-        System.out.println(username + " 已经准备完成");
+        System.out.println(username + ">");
 
     }
 

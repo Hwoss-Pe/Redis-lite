@@ -1,31 +1,39 @@
 package HashMapControl;
 
+import Io.MultiWriteHandler;
+import Io.inputCheck;
+import Io.properties;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
+import static log.AppendFile.loadCommands;
+
 public class SSHashMap {
-    static String HashMapAddress = "..\\Test444\\Datas1.bin";
-    static  HashMap<String, String> hm = null;
+//    static String HashMapAddress = "..\\Test444\\Datas1.bin";
+    static String HashMapAddress;
+    static  HashMap<String, String> hm = new HashMap<>();
 
     public static HashMap<String, String> input() throws IOException, ClassNotFoundException {
-        File file = new File(HashMapAddress);
-//        File file1 = new File("..\\Test444\\a.log");
-//        PrintStream pt = new PrintStream(new FileOutputStream(file1,true));
-        if (file.exists()) {
-            //导入
-            ObjectInputStream ois = null;
-//            try {
-            ois = new ObjectInputStream(new FileInputStream(file));
-            //从文件中读取数据
-            hm = (HashMap<String, String>) ois.readObject();
-            ois.close();
-        }else{
-            hm = new HashMap<String, String>();
-        }
-        return hm;
+        HashMapAddress= properties.property("SSHashMap");
+           File file = new File(HashMapAddress);
+            if (file.exists()) {
+                //导入
+                ObjectInputStream ois = null;
+                ois = new ObjectInputStream(new FileInputStream(file));
+                //从文件中读取数据
+                hm = (HashMap<String, String>) ois.readObject();
+                ois.close();
+            }
+            return hm;
     }
+
+
+
+
 
     //    这里就写一个写进去文件的方法，理解成手动刷盘
 // 写入文件

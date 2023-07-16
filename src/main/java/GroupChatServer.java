@@ -1,3 +1,4 @@
+import Io.properties;
 import Time.AutoSave;
 import Time.delayHash;
 
@@ -12,12 +13,23 @@ class GroupChatServer{
     //定义属性
     private Selector selector;
     private ServerSocketChannel listenChannel;
-    private static final int PORT = 10086;
+    private static  int PORT ;
     private SubReactor subReactor;
 
     //构造器
     //初始化工作
     public GroupChatServer() {
+        String PORTStr = null;
+        try {
+            PORTStr = properties.property("PORT");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(PORTStr != null){
+            PORT = Integer.parseInt(PORTStr);
+        }else{
+            System.out.println("端口配置出错");
+        }
         try {
             //得到选择器
             selector = Selector.open();
@@ -107,8 +119,8 @@ class GroupChatServer{
                 autoSave.execute();
             }
         };
-        // 在程序启动后延迟两秒钟执行定时任务，然后每隔一分钟执行一次
-        timer.schedule(task, 2000, 60*1000);
+        // 在程序启动后延迟10秒钟执行定时任务，然后每隔一分钟执行一次
+        timer.schedule(task, 10000, 60*1000);
         groupChatServer.listen();
 
     }

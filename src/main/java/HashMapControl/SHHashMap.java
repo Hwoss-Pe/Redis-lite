@@ -1,25 +1,31 @@
 package HashMapControl;
 
+import Io.MultiWriteHandler;
+import Io.inputCheck;
+import Io.properties;
+
 import java.io.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
+import static log.AppendFile.loadCommands;
+
 public class SHHashMap {
-    static String SHHashMapAddress = "..\\Test444\\Datas3.bin";
-    static HashMap<String, HashMap<String,String>> hmh = null;
+    static String SHHashMapAddress ;
+//    static String SHHashMapAddress = "..\\Test444\\Datas3.bin";
+    static HashMap<String, HashMap<String,String>> hmh = new HashMap<>();
     public static HashMap<String, HashMap<String,String>> input() throws IOException, ClassNotFoundException {
-        File file = new File(SHHashMapAddress);
-        if (file.exists()) {
-            //导入
-            ObjectInputStream ois = null;
-//            try {
-            ois = new ObjectInputStream(new FileInputStream(file));
-            //从文件中读取数据
-            hmh = (HashMap<String, HashMap<String,String>>) ois.readObject();
-            ois.close();
-        }else{
-            hmh = new HashMap<String, HashMap<String,String>>();
-        }
+        SHHashMapAddress= properties.property("SHHashMap");
+            File file = new File(SHHashMapAddress);
+            if (file.exists()) {
+                //导入
+                ObjectInputStream ois = null;
+                ois = new ObjectInputStream(new FileInputStream(file));
+                //从文件中读取数据
+                hmh = (HashMap<String, HashMap<String,String>>) ois.readObject();
+                ois.close();
+            }
         return hmh;
     }
 

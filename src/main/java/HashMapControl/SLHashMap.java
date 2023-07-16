@@ -1,25 +1,30 @@
 package HashMapControl;
 
+import Io.MultiWriteHandler;
+import Io.inputCheck;
+import Io.properties;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import static log.AppendFile.loadCommands;
+
 public class SLHashMap {
-    static String SLHashMapAddress = "..\\Test444\\Datas2.bin";
-    static HashMap<String, LinkedList<String>> hml = null;
+    static String SLHashMapAddress;
+//    static String SLHashMapAddress = "..\\Test444\\Datas2.bin";
+    static HashMap<String, LinkedList<String>> hml = new HashMap<>();
     public static HashMap<String, LinkedList<String>> input() throws IOException, ClassNotFoundException {
-        File file = new File(SLHashMapAddress);
-        if (file.exists()) {
-            //导入
-            ObjectInputStream ois = null;
-//            try {
-            ois = new ObjectInputStream(new FileInputStream(file));
-            //从文件中读取数据
-            hml = (HashMap<String, LinkedList<String>>) ois.readObject();
-            ois.close();
-        }else{
-            hml = new HashMap<String, LinkedList<String>>();
-        }
+        SLHashMapAddress= properties.property("SLHashMap");
+            File file = new File(SLHashMapAddress);
+            if (file.exists()) {
+                //导入
+                ObjectInputStream ois = null;
+                ois = new ObjectInputStream(new FileInputStream(file));
+                //从文件中读取数据
+                hml = (HashMap<String, LinkedList<String>>) ois.readObject();
+                ois.close();
+            }
         return hml;
     }
 
