@@ -3,6 +3,7 @@ package log;
 import java.io.*;
 import Command.CommandExtract;
 import Io.properties;
+import Time.LogPrint;
 
 public class AppendFile {
 //
@@ -13,11 +14,7 @@ public class AppendFile {
 
      static   String  LOGFILE;
      static {
-         try {
-             LOGFILE = properties.property("appendFile");
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
+         LOGFILE = properties.property("appendFile");
      }
      static String commands = "";
     // 清空日志文件
@@ -31,7 +28,7 @@ public class AppendFile {
             writer.write(commands);
             clearLogFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            LogPrint.logger.error("手动save保存命令出错",e);
         }
     }
 
@@ -50,7 +47,7 @@ public class AppendFile {
             }
             clearLogFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            LogPrint.logger.error("读取缓存数据出错",e);
         }
     }
     public  static  void tempFile(String command){

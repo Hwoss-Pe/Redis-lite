@@ -2,7 +2,9 @@ package Command;
 
 import Command.Command;
 import Io.MultiWriteHandler;
+import Time.LogPrint;
 import log.AppendFile;
+import org.slf4j.ILoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,13 @@ public class CommandExtract {
 //    执行把输入的东西解析
     public Command Extract(String userInput)  {
         String[] split = userInput.split("说：");
-        return Command(split[1]);
+        Command command = null;
+        try {
+            command = Command(split[1]);
+        } catch (Exception e) {
+            LogPrint.logger.error("命令读入出现错误",e);
+        }
+        return command;
 //        注意返回的指令对象可能不存在，也就是错误的指令的时候
     }
 
@@ -41,7 +49,7 @@ public class CommandExtract {
                     command.execute();
                     return command;
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LogPrint.logger.error("命令执行失败",e);
                 }
             }
         } catch (ClassNotFoundException e) {

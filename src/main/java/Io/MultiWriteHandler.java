@@ -1,5 +1,7 @@
 package Io;
 
+import Time.LogPrint;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -21,16 +23,13 @@ public class MultiWriteHandler {
 
     public void run() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-//       记录bug，由于scanner会造成客户端输入阻塞，导致需要在服务端回馈数据后才会显示客户端发送的数据，
-//        因此这里再去采用多线程的方式去进行输入，可以保证两边的正常通信，这样做仍然存在服务端先行输入但是缺找不到通道的情况，出现在多个客户端的时候问题
-//        需要等待客户端输入后才可以
+//        这里有服务端通信延迟
         executorService.submit(new Runnable() {
             @Override
             public void run() {
                 try {
                     SocketChannel channel = (SocketChannel) key.channel();
                     Scanner scanner = new Scanner(System.in);
-
                     while (true) {
                         if (scanner.hasNextLine()) {
                             String message = scanner.nextLine();
@@ -46,7 +45,7 @@ public class MultiWriteHandler {
                         }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LogPrint.logger.error("SocketChannel创建出现异常或者IO出错",e);
                 }
             }
         });
@@ -61,7 +60,7 @@ public class MultiWriteHandler {
                         channel.write(charset.encode(message));
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LogPrint.logger.error("SocketChannel的key出错",e);
                 }
     }
 }

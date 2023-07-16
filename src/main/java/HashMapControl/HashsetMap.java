@@ -1,22 +1,18 @@
 package HashMapControl;
 
-import Io.MultiWriteHandler;
-import Io.inputCheck;
 import Io.properties;
+import Time.LogPrint;
 
 import java.io.*;
-import java.nio.charset.MalformedInputException;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static log.AppendFile.loadCommands;
-
 public class HashsetMap {
-//    static String SetMap = "..\\Test444\\Datas4.bin";
     static String SetMap ;
     static HashMap<String, HashSet<String>> hms = new HashMap<String, HashSet<String>>();
-    public static HashMap<String, HashSet<String>> input() throws IOException, ClassNotFoundException {
-        SetMap= properties.property("HashsetMap");
+    public static HashMap<String, HashSet<String>> input() {
+        try {
+            SetMap= properties.property("HashsetMap");
             File file = new File(SetMap);
             if (file.exists()) {
                 //导入
@@ -26,18 +22,31 @@ public class HashsetMap {
                 hms = (HashMap<String, HashSet<String>>) ois.readObject();
                 ois.close();
             }
+        } catch (IOException e) {
+            LogPrint.logger.error("读入失败",e);
+        } catch (ClassNotFoundException e) {
+            LogPrint.logger.error("找不到类property",e);
+        }
         return hms;
     }
 
 // 写入文件
-    public static void output(HashMap<String, HashSet<String>> hms) throws IOException {
+    public static void output(HashMap<String, HashSet<String>> hms)  {
         File file = new File(SetMap);
         ObjectOutputStream oos = null;
-        oos = new ObjectOutputStream(new FileOutputStream(SetMap));
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream(SetMap));
+        } catch (IOException e) {
+            LogPrint.logger.error("获取文件流失败",e);
+        }
         if (file.exists()) {
             if (hms != null) {
-                oos.writeObject(hms);
-                oos.flush();
+                try {
+                    oos.writeObject(hms);
+                    oos.flush();
+                } catch (IOException e) {
+                    LogPrint.logger.error("读入失败",e);
+                }
             }
         } else {
             try {
@@ -47,12 +56,13 @@ public class HashsetMap {
                     if (hms != null) {
                         oos.writeObject(hms);
                         oos.flush();
+                        oos.close();
                     }
                 } else {
                     System.out.println("Data4创建文件失败");
                 }
             } catch (IOException e) {
-                System.out.println("Data4创建文件时出现异常：" + e.getMessage());
+                LogPrint.logger.error("读入文件Data4异常",e);
             }
         }
     }

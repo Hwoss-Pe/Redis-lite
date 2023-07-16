@@ -4,6 +4,7 @@ import HashMapControl.HashsetMap;
 import HashMapControl.SHHashMap;
 import HashMapControl.SLHashMap;
 import HashMapControl.SSHashMap;
+import Time.LogPrint;
 import log.AppendFile;
 
 import java.io.FileInputStream;
@@ -15,17 +16,17 @@ import java.util.Properties;
 
 public class OutputCheck {
     //   这个不同于input，输出是一起输出出去，绑定的；
-    public static void output() throws IOException {
+    public static void output()  {
         String persistenceMethod = "dataPersistence";
 //            默认采用数据持久化
         try {
             Properties properties = new Properties();
-            FileInputStream fileInputStream = new FileInputStream("..\\Test444\\config.properties");
+            FileInputStream fileInputStream = new FileInputStream("..\\Test444\\src\\main\\resources\\config.properties");
             properties.load(fileInputStream);
             persistenceMethod = properties.getProperty("persistenceMethod");
             fileInputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LogPrint.logger.error("读入配置文件异常",e);
         }
         if (persistenceMethod.equals("dataPersistence")) {
             HashMap<String, String> hm = SSHashMap.getSSHashMap();

@@ -20,13 +20,8 @@ public class AutoSave {
 
     public void execute() {
         Thread saveThread = new Thread(() -> {
-            try {
-                OutputCheck.output();
-                System.out.println("后台保存成功");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("后台保存失败");
-            }
+            OutputCheck.output();
+            System.out.println("后台保存成功");
         });
         saveThread.start();
     }

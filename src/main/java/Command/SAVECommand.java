@@ -28,12 +28,7 @@ public class SAVECommand implements Command {
     @Override
     public void execute() {
         System.out.println("此时运行的是save命令");
-        try {
-            OutputCheck.output();
-            MultiWriteHandler.setClient("保存成功");
-        } catch (IOException e) {
-            e.printStackTrace();
-            MultiWriteHandler.setClient("保存失败");
-        }
+        OutputCheck.output();
+        MultiWriteHandler.setClient("保存成功");
     }
 }

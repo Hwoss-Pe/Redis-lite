@@ -1,22 +1,17 @@
 package HashMapControl;
 
-import Io.MultiWriteHandler;
-import Io.inputCheck;
 import Io.properties;
+import Time.LogPrint;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-
-import static log.AppendFile.loadCommands;
 
 public class SHHashMap {
     static String SHHashMapAddress ;
-//    static String SHHashMapAddress = "..\\Test444\\Datas3.bin";
     static HashMap<String, HashMap<String,String>> hmh = new HashMap<>();
-    public static HashMap<String, HashMap<String,String>> input() throws IOException, ClassNotFoundException {
-        SHHashMapAddress= properties.property("SHHashMap");
+    public static HashMap<String, HashMap<String,String>> input()  {
+        try {
+            SHHashMapAddress= properties.property("SHHashMap");
             File file = new File(SHHashMapAddress);
             if (file.exists()) {
                 //导入
@@ -26,19 +21,32 @@ public class SHHashMap {
                 hmh = (HashMap<String, HashMap<String,String>>) ois.readObject();
                 ois.close();
             }
+        } catch (IOException e) {
+            LogPrint.logger.error("获取IO流出错",e);
+        } catch (ClassNotFoundException e) {
+            LogPrint.logger.error("找不到文件Data3",e);
+        }
         return hmh;
     }
 
     //    这里就写一个写进去文件的方法，理解成手动刷盘
 // 写入文件
-    public static void output(HashMap<String, HashMap<String,String>> hmh) throws IOException {
+    public static void output(HashMap<String, HashMap<String,String>> hmh)  {
         File file = new File(SHHashMapAddress);
         ObjectOutputStream oos = null;
-        oos = new ObjectOutputStream(new FileOutputStream(SHHashMapAddress));
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream(SHHashMapAddress));
+        } catch (IOException e) {
+            LogPrint.logger.error("找不到文件",e);
+        }
         if (file.exists()) {
-            if (hmh != null) {
-                oos.writeObject(hmh);
-                oos.flush();
+            try {
+                if (hmh != null) {
+                    oos.writeObject(hmh);
+                    oos.flush();
+                }
+            } catch (IOException e) {
+                LogPrint.logger.error("写入Data3失败",e);
             }
         } else {
             try {
@@ -48,12 +56,13 @@ public class SHHashMap {
                     if (hmh != null) {
                         oos.writeObject(hmh);
                         oos.flush();
+                        oos.close();
                     }
                 } else {
                     System.out.println("Data3创建文件失败");
                 }
             } catch (IOException e) {
-                System.out.println("Data3创建文件时出现异常：" + e.getMessage());
+                LogPrint.logger.error("Data3文件创建出错",e);
             }
         }
     }

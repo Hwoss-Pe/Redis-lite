@@ -22,14 +22,10 @@ public class InputCheck2 {
 
 
 
-    public static void input() throws IOException, ClassNotFoundException {
+    public static void input()  {
         String persistenceMethod = "dataPersistence";
 //            默认采用数据持久化
-        try {
             persistenceMethod =  properties.property("persistenceMethod");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         if (persistenceMethod.equals("dataPersistence")) {
             HashMap<String, String> hm = SSHashMap.input();
             HashMap<String, LinkedList<String>> hml = SLHashMap.input();

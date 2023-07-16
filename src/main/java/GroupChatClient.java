@@ -1,4 +1,5 @@
 import Io.properties;
+import Time.LogPrint;
 
 import javax.sound.sampled.Port;
 import java.io.IOException;
@@ -20,20 +21,24 @@ public class GroupChatClient {
     private String username;
 
     //构造器, 完成初始化工作
-    public GroupChatClient() throws IOException {
+    public GroupChatClient()  {
         HOST = properties.property("HOST");
         String PORTStr = properties.property("PORT");
         PORT = Integer.parseInt(PORTStr);
 
-        selector = Selector.open();
-        //连接服务器
-        socketChannel = SocketChannel.open(new InetSocketAddress(HOST, PORT));
-        //设置非阻塞
-        socketChannel.configureBlocking(false);
-        //将channel 注册到selector
-        socketChannel.register(selector, SelectionKey.OP_READ);
-        //得到username
-        username = socketChannel.getLocalAddress().toString().substring(1);
+        try {
+            selector = Selector.open();
+            //连接服务器
+            socketChannel = SocketChannel.open(new InetSocketAddress(HOST, PORT));
+            //设置非阻塞
+            socketChannel.configureBlocking(false);
+            //将channel 注册到selector
+            socketChannel.register(selector, SelectionKey.OP_READ);
+            //得到username
+            username = socketChannel.getLocalAddress().toString().substring(1);
+        } catch (IOException e) {
+            LogPrint.logger.error("SocketChannel创建出现异常或者IO出错",e);
+        }
         System.out.println(username + ">");
 
     }
@@ -46,7 +51,7 @@ public class GroupChatClient {
         try {
             socketChannel.write(ByteBuffer.wrap(info.getBytes()));
         }catch (IOException e) {
-            e.printStackTrace();
+            LogPrint.logger.error("SocketChannel通道出现异常",e);
         }
     }
 
@@ -76,12 +81,12 @@ public class GroupChatClient {
                 System.out.println("没有可以用的通道...");
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            LogPrint.logger.error("SocketChannel通道出现异常出错",e);
         }
     }
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
 
         //启动我们客户端
         GroupChatClient chatClient = new GroupChatClient();
@@ -93,7 +98,7 @@ public class GroupChatClient {
                 try {
                     Thread.sleep(1000);
                 }catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LogPrint.logger.error("线程并发异常",e);
                 }
             }
         }).start();

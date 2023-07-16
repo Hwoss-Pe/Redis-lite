@@ -1,5 +1,6 @@
 import Io.properties;
 import Time.AutoSave;
+import Time.LogPrint;
 import Time.delayHash;
 
 import java.io.IOException;
@@ -20,11 +21,7 @@ class GroupChatServer{
     //初始化工作
     public GroupChatServer() {
         String PORTStr = null;
-        try {
-            PORTStr = properties.property("PORT");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        PORTStr = properties.property("PORT");
         if(PORTStr != null){
             PORT = Integer.parseInt(PORTStr);
         }else{
@@ -42,7 +39,7 @@ class GroupChatServer{
             //将该listenChannel 注册到selector
             listenChannel.register(selector, SelectionKey.OP_ACCEPT);
         }catch (IOException e) {
-            e.printStackTrace();
+            LogPrint.logger.error("listenChannel出现异常",e);
         }
     }
     //监听
@@ -89,24 +86,16 @@ class GroupChatServer{
             }
 
         }catch (Exception e) {
-            e.printStackTrace();
-
-        }finally {
-            //发生异常处理....
-
+            LogPrint.logger.error("listen出现异常",e);
         }
     }
-    /**
-     * 添加子Reactor
-     * @param subReactor
-     * @return
-     */
+//添加子reactor
     public void addSub(SubReactor subReactor){
         this.subReactor=subReactor;
         this.subReactor.run();
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args)  {
         //创建服务器对象
         GroupChatServer groupChatServer = new GroupChatServer();
         groupChatServer.addSub(new SubReactor());

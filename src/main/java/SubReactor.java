@@ -1,11 +1,9 @@
 import Command.Command;
-import HashMapControl.HashsetMap;
-import HashMapControl.SHHashMap;
-import HashMapControl.SLHashMap;
-import HashMapControl.SSHashMap;
 import Io.InputCheck2;
 import Io.MultiWriteHandler;
 import Command.CommandExtract;
+import Time.LogPrint;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
@@ -19,26 +17,25 @@ class SubReactor {
     private volatile boolean stop;
     private ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-    public SubReactor() throws IOException, ClassNotFoundException {
+    public SubReactor()  {
 
         InputCheck2.input();
         try {
             selector = SelectorProvider.provider().openSelector();
             stop = false;
         } catch (IOException e) {
-            e.printStackTrace();
+            LogPrint.logger.error("创建子reactor出现异常",e);
             System.exit(1);
         }
     }
 
-    /**
-     * 将主Reactor中的Channel注册到从Reactor中的selector
-     */
+
+//     将主Reactor中的Channel注册到从Reactor中的selector
     public void register(SocketChannel sc) {
         try {
             sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         } catch (ClosedChannelException e) {
-            e.printStackTrace();
+            LogPrint.logger.error("注册selector出现异常",e);
         }
     }
 
@@ -61,7 +58,7 @@ class SubReactor {
                             key = it.next();
                             it.remove();
                             try {
-                                disptach(key);
+                                disPatch(key);
                             } catch (Exception e) {
                                 if (key != null) {
                                     key.cancel();
@@ -71,7 +68,7 @@ class SubReactor {
                             }
                         }
                     } catch (Throwable t) {
-                        t.printStackTrace();
+                        LogPrint.logger.error("reactor出现异常",t);
                     }
                 }
             }
@@ -79,10 +76,9 @@ class SubReactor {
 
     }
 
-    private void disptach(SelectionKey key) {
-        /**
-         * 从Reactor只关心读和写事件
-         */
+    private void disPatch(SelectionKey key) {
+//        从Reactor只关心读和写事件
+
         if (key.isValid()) {
             if (key.isReadable()) {
                 //处理读 (专门写方法..)
@@ -99,7 +95,7 @@ class SubReactor {
         SocketChannel channel = null;
 
         try {
-            //取到关联的channle
+            //取到关联的channel
             //得到channel
             channel = (SocketChannel) key.channel();
             //创建buffer
@@ -117,10 +113,7 @@ class SubReactor {
                         //输出该消息
                         System.out.println("从客户端收到: " + msg);
                         CommandExtract commandExtract   = new CommandExtract();
-                        Command command = commandExtract.Extract(msg);
-//                        if (command!=null) {
-//                            command.execute();
-//                        }
+                       commandExtract.Extract(msg);
                         System.out.println("-----------------------------------------------------------");
                     }
                 }
@@ -129,20 +122,20 @@ class SubReactor {
             sendInfoToOtherClients(msg, channel);
         } catch (Exception e) {
             try {
+                assert channel != null;
                 System.out.println(channel.getRemoteAddress() + " 离线了..");
                 //取消注册
                 key.cancel();
                 //关闭通道
                 channel.close();
             } catch (IOException e2) {
-                e2.printStackTrace();
+                LogPrint.logger.error("关闭通道出现异常",e);
             }
         }
     }
 
     //转发消息给其它客户(通道)
-    private void sendInfoToOtherClients(String msg, SocketChannel self) throws IOException {
-        System.out.println("服务器转发消息中...");
+    private void sendInfoToOtherClients(String msg, SocketChannel self)  {
         System.out.println("服务器转发数据给客户端线程: " + Thread.currentThread().getName());
 
         //遍历 所有注册到selector 上的 SocketChannel,并排除 self
@@ -157,7 +150,11 @@ class SubReactor {
                 //将msg 存储到buffer
                 ByteBuffer buffer = ByteBuffer.wrap(msg.getBytes());
                 //将buffer 的数据写入 通道
-                dest.write(buffer);
+                try {
+                    dest.write(buffer);
+                } catch (IOException e) {
+                    LogPrint.logger.error("将buffer的数据写入通道出现异常",e);
+                }
             }
         }
     }
