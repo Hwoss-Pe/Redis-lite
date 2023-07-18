@@ -25,7 +25,7 @@ class GroupChatServer{
         if(PORTStr != null){
             PORT = Integer.parseInt(PORTStr);
         }else{
-            System.out.println("端口配置出错");
+            LogPrint.logger.error("配置端口出错");
         }
         try {
             //得到选择器
@@ -55,7 +55,7 @@ class GroupChatServer{
                     //遍历得到selectionKey 集合
                     Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
                     while (iterator.hasNext()) {
-                        //取出selectionkey
+                        //取出selectionKey
                         SelectionKey key = iterator.next();
 
                         //监听到accept
@@ -65,11 +65,9 @@ class GroupChatServer{
                             SocketChannel sc = listenChannel.accept();
                             sc.configureBlocking(false);
                             //提示
-                            System.out.println(sc.getRemoteAddress() + " 上线 ");
+                            System.out.println(sc.getRemoteAddress() + " 启动 ");
                             System.out.println("-----------------------------------------------------------");
-                            /**
-                             * 主Reactor只关心Accept事件
-                             */
+
                             if(subReactor==null){
                                 Selector selector = key.selector();
                                 SelectionKey sk = sc.register(selector, SelectionKey.OP_READ);
@@ -86,7 +84,7 @@ class GroupChatServer{
             }
 
         }catch (Exception e) {
-            LogPrint.logger.error("listen出现异常",e);
+            LogPrint.logger.error("监听出现异常",e);
         }
     }
 //添加子reactor

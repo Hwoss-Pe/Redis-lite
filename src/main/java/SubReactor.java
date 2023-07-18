@@ -1,4 +1,4 @@
-import Command.Command;
+import Command.SAVECommand;
 import Io.InputCheck2;
 import Io.MultiWriteHandler;
 import Command.CommandExtract;
@@ -124,6 +124,13 @@ class SubReactor {
             try {
                 assert channel != null;
                 System.out.println(channel.getRemoteAddress() + " 离线了..");
+
+//                离线后自动进行保存，是客户端退出的时候服务器检测然后进行保存，在客户端也写了一次保证成功
+                SAVECommand saveCommand = new SAVECommand();
+                saveCommand.execute();
+
+
+
                 //取消注册
                 key.cancel();
                 //关闭通道

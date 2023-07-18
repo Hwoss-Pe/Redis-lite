@@ -1,7 +1,6 @@
+import Command.SAVECommand;
 import Io.properties;
 import Time.LogPrint;
-
-import javax.sound.sampled.Port;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -81,7 +80,7 @@ public class GroupChatClient {
                 System.out.println("没有可以用的通道...");
             }
         }catch (Exception e) {
-            LogPrint.logger.error("SocketChannel通道出现异常出错",e);
+            e.printStackTrace();
         }
     }
 
@@ -91,7 +90,24 @@ public class GroupChatClient {
         //启动我们客户端
         GroupChatClient chatClient = new GroupChatClient();
 
-        //启动一个线程, 每个3秒，读取从服务器发送数据
+
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            SAVECommand saveCommand = new SAVECommand();
+            saveCommand.execute();
+//           这个实现只能用在调试，到现在没看懂，也可能是我的设计的通道模式是等待断开导致程序是异常退出所以没法关闭钩子运行
+//            因此在是服务端进行监听，如果失去连接就实现保存
+//            如果想检测手动保存的功能将这段代码和服务器里面的一起注释在SubReactor里面
+        }));
+
+
+
+
+
+
+
+
+
         new Thread(() -> {
             while (true) {
                 chatClient.readInfo();
@@ -102,12 +118,20 @@ public class GroupChatClient {
                 }
             }
         }).start();
-        //发送数据给服务器端
+
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             System.out.println(HOST+":"+ PORT+">");
             String s = scanner.nextLine();
             chatClient.sendInfo(s);
         }
+
+
+
+
+
+
+
+
     }
 }
