@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 
-public class GroupChatClient {
+public class SocketClient {
     //定义相关的属性
     private static  String HOST ; // 服务器的ip
     private static   int PORT ; //服务器端口
@@ -20,7 +20,7 @@ public class GroupChatClient {
     private String username;
 
     //构造器, 完成初始化工作
-    public GroupChatClient()  {
+    public SocketClient()  {
         HOST = properties.property("HOST");
         String PORTStr = properties.property("PORT");
         PORT = Integer.parseInt(PORTStr);
@@ -88,7 +88,7 @@ public class GroupChatClient {
     public static void main(String[] args)  {
 
         //启动我们客户端
-        GroupChatClient chatClient = new GroupChatClient();
+        SocketClient chatClient = new SocketClient();
 
 
 

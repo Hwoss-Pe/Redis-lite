@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
-class GroupChatServer{
+class SocketServer {
     //定义属性
     private Selector selector;
     private ServerSocketChannel listenChannel;
@@ -19,7 +19,7 @@ class GroupChatServer{
 
     //构造器
     //初始化工作
-    public GroupChatServer() {
+    public SocketServer() {
         String PORTStr = null;
         PORTStr = properties.property("PORT");
         if(PORTStr != null){
@@ -95,8 +95,8 @@ class GroupChatServer{
 
     public static void main(String[] args)  {
         //创建服务器对象
-        GroupChatServer groupChatServer = new GroupChatServer();
-        groupChatServer.addSub(new SubReactor());
+        SocketServer socketServer = new SocketServer();
+        socketServer.addSub(new SubReactor());
         delayHash delayHash = new delayHash();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -108,7 +108,7 @@ class GroupChatServer{
         };
         // 在程序启动后延迟10秒钟执行定时任务，然后每隔一分钟执行一次
         timer.schedule(task, 10000, 60*1000);
-        groupChatServer.listen();
+        socketServer.listen();
 
     }
 }
