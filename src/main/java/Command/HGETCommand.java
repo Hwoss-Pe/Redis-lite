@@ -2,6 +2,7 @@ package Command;
 import HashMapControl.SHHashMap;
 import Io.MultiWriteHandler;
 import HashMapControl.SSHashMap;
+import Protocolutils.Protocol;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,22 +23,25 @@ public class HGETCommand implements Command {
 
     @Override
     public void execute() {
-        if(setArgs.size()<=1){
-            MultiWriteHandler.setClient("需要两个参数");
-            return ;
-        }
+        Protocol protocol = new Protocol();
+        String s ;
         String key1 = setArgs.get(0);
         String key2 = setArgs.get(1);
         System.out.println("此时运行的是hget命令");
+        if(setArgs.size()<=1){
+            s = protocol.encodeServer("", "401");
 
-        HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
-        if(hmh.containsKey(key1)){
-            HashMap<String, String> hm = hmh.get(key1);
-            String value = hm.get(key2);
-            MultiWriteHandler.setClient(value+"\n");
-        }else{
-            MultiWriteHandler.setClient("找不到当前的key");
+        }else {
+            HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
+            if (hmh.containsKey(key1)) {
+                HashMap<String, String> hm = hmh.get(key1);
+                String value = hm.get(key2);
+                s = protocol.encodeServer(value, "200");
+            } else {
+                s = protocol.encodeServer("", "501");
+            }
         }
+        MultiWriteHandler.setClient(s);
     }
 
 }

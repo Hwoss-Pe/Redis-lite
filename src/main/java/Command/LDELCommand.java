@@ -2,6 +2,8 @@ package Command;
 import HashMapControl.SLHashMap;
 import Io.MultiWriteHandler;
 import HashMapControl.SSHashMap;
+import Protocolutils.Protocol;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,26 +24,30 @@ public class LDELCommand implements Command {
 
     @Override
     public void execute() {
-        if(setArgs.size()<1){
-            MultiWriteHandler.setClient("至少需要一个参数");
-            return;
-        }
-        String key = setArgs.get(0);
         System.out.println("此时运行的是ldel命令");
-        HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
-        if(hml.containsKey(key)){
-            LinkedList<String> linkedList = hml.get(key);
-            if(linkedList!=null){
-                linkedList.clear();
-                MultiWriteHandler.setClient("1");
+        Protocol protocol = new Protocol();
+        String s ;
+        if(setArgs.size()<1){
+            s = protocol.encodeServer("", "401");
+        }else {
+            String key = setArgs.get(0);
+            HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
+            if(hml.containsKey(key)){
+                LinkedList<String> linkedList = hml.get(key);
+                if(linkedList!=null){
+                    linkedList.clear();
+                    s = protocol.encodeServer("", "200");
+                }else{
+                    s = protocol.encodeServer("", "404");
+                }
             }else{
-                MultiWriteHandler.setClient("0");
+                s = protocol.encodeServer("", "501");
             }
-        }else{
-            MultiWriteHandler.setClient("0");
+            SLHashMap.setHml(hml);
+            MultiWriteHandler.setClient(s);
         }
 
-        System.out.println("清空成功");
-        SLHashMap.setHml(hml);
+
+
     }
 }

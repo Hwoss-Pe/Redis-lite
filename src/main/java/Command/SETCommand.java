@@ -1,6 +1,7 @@
 package Command;
 import Io.MultiWriteHandler;
 import HashMapControl.SSHashMap;
+import Protocolutils.Protocol;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,17 +22,20 @@ public class SETCommand implements Command {
 
     @Override
     public void execute() {
+        Protocol protocol = new Protocol();
+        String s;
         if(setArgs.size()<=1){
-            MultiWriteHandler.setClient("至少需要两个参数");
-            return;
+            s = protocol.encodeServer("", "401");
+        }else{
+            String key = setArgs.get(0);
+            String value = setArgs.get(1);
+            System.out.println("此时运行的是set命令");
+            HashMap<String, String> hm = SSHashMap.getSSHashMap();
+            hm.put(key, value);
+            SSHashMap.setHm(hm);
+            s = protocol.encodeServer("", "200");
         }
-        String key = setArgs.get(0);
-        String value = setArgs.get(1);
-        System.out.println("此时运行的是set命令");
-        HashMap<String, String> hm = SSHashMap.getSSHashMap();
-        hm.put(key, value);
-        SSHashMap.setHm(hm);
-        MultiWriteHandler.setClient("1");
+        MultiWriteHandler.setClient(s);
     }
 
 }

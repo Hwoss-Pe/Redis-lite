@@ -1,6 +1,7 @@
 package Command;
 import Io.MultiWriteHandler;
 import Io.OutputCheck;
+import Protocolutils.Protocol;
 import Time.LogPrint;
 
 import java.io.IOException;
@@ -16,7 +17,9 @@ public class BGSAVECommand implements Command {
     public void execute() {
         Thread saveThread = new Thread(() -> {
             OutputCheck.output();
-            MultiWriteHandler.setClient("后台保存成功");
+            Protocol protocol = new Protocol();
+            String s = protocol.encodeServer("OK", "200");
+            MultiWriteHandler.setClient(s);
         });
         saveThread.start();
     }

@@ -3,6 +3,7 @@ package Command;
 import HashMapControl.SHHashMap;
 import HashMapControl.SLHashMap;
 import Io.MultiWriteHandler;
+import Protocolutils.Protocol;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -24,23 +25,24 @@ public class RPOPCommand implements Command{
 
     @Override
     public void execute() {
-        if(setArgs.size()<1) {
-            MultiWriteHandler.setClient("至少需要一个参数");
-            return;
-        }
+        Protocol protocol = new Protocol();
+        String s ;
         System.out.println("此时运行的是rpop命令");
-        HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
-        String key = setArgs.get(0);
-        LinkedList<String> linkedList = hml.get(key);
-        if(linkedList==null||linkedList.size()==0){
-            System.out.println("key错误或者该集合为空");
-            System.out.println("0表示删除失败");
-        }else{
-            String removing = linkedList.removeLast();
-            hml.put(key,linkedList);
-            SLHashMap.setHml(hml);
-            MultiWriteHandler.setClient(removing);
-            System.out.println("1表示删除成功");
+        if(setArgs.size()<1) {
+            s = protocol.encodeServer("", "401");
+        }else {
+            HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
+            String key = setArgs.get(0);
+            LinkedList<String> linkedList = hml.get(key);
+            if(linkedList==null||linkedList.size()==0){
+                s = protocol.encodeServer("key错误或者该集合为空", "404");
+            }else{
+                String removing = linkedList.removeLast();
+                hml.put(key,linkedList);
+                SLHashMap.setHml(hml);
+                s = protocol.encodeServer(removing, "200");
+            }
         }
+        MultiWriteHandler.setClient(s);
     }
 }

@@ -7,6 +7,7 @@ import HashMapControl.SLHashMap;
 import HashMapControl.SSHashMap;
 import Io.MultiWriteHandler;
 import Io.OutputCheck;
+import Protocolutils.Protocol;
 import log.AppendFile;
 
 import java.io.IOException;
@@ -27,8 +28,11 @@ public class SAVECommand implements Command {
 
     @Override
     public void execute() {
+        Protocol protocol = new Protocol();
+        String s ;
         System.out.println("此时运行的是save命令");
         OutputCheck.output();
-        MultiWriteHandler.setClient("保存成功");
+        s = protocol.encodeServer("", "200");
+        MultiWriteHandler.setClient(s);
     }
 }

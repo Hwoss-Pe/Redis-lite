@@ -1,6 +1,7 @@
 package Command;
 import Io.MultiWriteHandler;
 import HashMapControl.SSHashMap;
+import Protocolutils.Protocol;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +22,11 @@ public class GETCommand implements Command {
 
     @Override
     public void execute() {
+        Protocol protocol = new Protocol();
+        String s ;
         if(setArgs.size()<1){
-            MultiWriteHandler.setClient("至少需要一个参数");
+           s =  protocol.encodeServer("", "401");
+            MultiWriteHandler.setClient(s);
             return ;
         }
         String key = setArgs.get(0);
@@ -31,10 +35,11 @@ public class GETCommand implements Command {
         HashMap<String, String> hm = SSHashMap.getSSHashMap();
         if(hm.containsKey(key)){
             String value = hm.get(key);
-            MultiWriteHandler.setClient(value+"\n");
+           s=  protocol.encodeServer(value, "200");
         }else{
-            MultiWriteHandler.setClient("找不到当前的key");
+            s=  protocol.encodeServer("", "501");
         }
+        MultiWriteHandler.setClient(s);
     }
 
 }

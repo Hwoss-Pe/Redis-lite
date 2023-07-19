@@ -2,6 +2,7 @@ package Command;
 
 import HashMapControl.SLHashMap;
 import Io.MultiWriteHandler;
+import Protocolutils.Protocol;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,21 +20,28 @@ public class LENCommand implements Command {
 
     @Override
     public void execute() {
-        String key = setArgs.get(0);
+        Protocol protocol = new Protocol();
+        String s ;
         System.out.println("此时运行的是len命令");
-        int size;
-        HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
-        if(hml.containsKey(key)){
-            LinkedList<String> linkedList = hml.get(key);
-            if(linkedList==null){
-                size = 0;
+        if (setArgs.size()==0){
+            s = protocol.encodeServer("", "401");
+        }else {
+            String key = setArgs.get(0);
+            int size;
+            HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
+            if(hml.containsKey(key)){
+                LinkedList<String> linkedList = hml.get(key);
+                if(linkedList==null){
+                    size = 0;
+                }
+                else{
+                    size = linkedList.size();
+                }
+                s = protocol.encodeServer(size+"", "200");
+            }else{
+                s = protocol.encodeServer("", "501");
             }
-            else{
-                size = linkedList.size();
-            }
-            MultiWriteHandler.setClient(size+"");
-        }else{
-            MultiWriteHandler.setClient("key找不到");
         }
+            MultiWriteHandler.setClient(s);
     }
 }

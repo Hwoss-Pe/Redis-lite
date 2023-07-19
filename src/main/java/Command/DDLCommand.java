@@ -1,6 +1,7 @@
 package Command;
 
 import Io.MultiWriteHandler;
+import Protocolutils.Protocol;
 import Time.delayHash;
 
 import java.util.List;
@@ -23,13 +24,16 @@ public class DDLCommand implements Command{
     @Override
     public void execute() {
         System.out.println("此时运行的是ddl命令");
+        String s ;
+        Protocol protocol = new Protocol();
         if(setArgs.size()==0){
-            MultiWriteHandler.setClient("至少需要一个参数");
-            return ;
+            s = protocol.encodeServer("", "401");
+        }else {
+            String key = setArgs.get(0);
+            delayHash DelayHash = new delayHash();
+            long remainingTime = DelayHash.getKeyTtl(key);
+            s = protocol.encodeServer(remainingTime + "", "200");
         }
-        String key = setArgs.get(0);
-        delayHash DelayHash = new delayHash();
-        long remainingTime = DelayHash.getKeyTtl(key);
-        MultiWriteHandler.setClient(remainingTime+"");
+        MultiWriteHandler.setClient(s);
     }
 }

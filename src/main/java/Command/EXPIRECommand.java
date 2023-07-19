@@ -1,6 +1,7 @@
 package Command;
 
 import Io.MultiWriteHandler;
+import Protocolutils.Protocol;
 import Time.delayHash;
 
 import java.util.List;
@@ -23,14 +24,19 @@ public class EXPIRECommand implements Command{
     @Override
     public void execute() {
         System.out.println("此时运行的是expire命令");
+        String s ;
+        Protocol protocol = new Protocol();
         if(setArgs.size()<=1){
-            MultiWriteHandler.setClient("至少需要两个参数");
-            return;
+            s = protocol.encodeServer("", "401");
+        }else{
+            delayHash delayHash = new delayHash();
+            // 设置键的过期时间
+            String key = setArgs.get(0);
+            String expire = setArgs.get(1);
+            delayHash.setKeyExpiration(key, Long.parseLong(expire));
+            s = protocol.encodeServer("", "200");
         }
-        delayHash delayHash = new delayHash();
-        // 设置键的过期时间
-        String key = setArgs.get(0);
-        String expire = setArgs.get(1);
-        delayHash.setKeyExpiration(key, Long.parseLong(expire));
+        MultiWriteHandler.setClient(s);
+
     }
 }

@@ -1,5 +1,6 @@
 import Command.SAVECommand;
 import Io.properties;
+import Protocolutils.Protocol;
 import Time.LogPrint;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -46,7 +47,9 @@ public class SocketClient {
     public void sendInfo(String info) {
 
         info = username + " 说：" + info;
-
+//        写入前包装一下，这里就要写一个通过协议的方法
+        Protocol protocol = new Protocol();
+        info = protocol.encodeClient(info);
         try {
             socketChannel.write(ByteBuffer.wrap(info.getBytes()));
         }catch (IOException e) {
@@ -72,7 +75,10 @@ public class SocketClient {
                         sc.read(buffer);
                         //把读到的缓冲区的数据转成字符串
                         String msg = new String(buffer.array());
-                        System.out.println(msg.trim());
+                        Protocol protocol = new Protocol();
+                         msg = protocol.decodeClient(msg);
+                      msg = new String(msg.replaceAll("\u0000", ""));
+                        System.out.println(msg);
                     }
                 }
                 iterator.remove(); //删除当前的selectionKey, 防止重复操作
@@ -99,15 +105,6 @@ public class SocketClient {
 //            因此在是服务端进行监听，如果失去连接就实现保存
 //            如果想检测手动保存的功能将这段代码和服务器里面的一起注释在SubReactor里面
         }));
-
-
-
-
-
-
-
-
-
         new Thread(() -> {
             while (true) {
                 chatClient.readInfo();

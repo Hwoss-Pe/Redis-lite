@@ -2,6 +2,7 @@ import Command.SAVECommand;
 import Io.InputCheck2;
 import Io.MultiWriteHandler;
 import Command.CommandExtract;
+import Protocolutils.Protocol;
 import Time.LogPrint;
 
 import java.io.IOException;
@@ -104,6 +105,9 @@ class SubReactor {
             int count = channel.read(buffer);
             //把缓存区的数据转成字符串
             String msg = new String(buffer.array()).replaceAll("\u0000", "");
+            Protocol protocol = new Protocol();
+            msg= protocol.decodeServer(msg);
+            String finalMsg = msg;
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -111,9 +115,10 @@ class SubReactor {
                     //根据count的值做处理
                     if (count > 0) {
                         //输出该消息
-                        System.out.println("从客户端收到: " + msg);
+                        System.out.println("从客户端收到: " + finalMsg);
+
                         CommandExtract commandExtract   = new CommandExtract();
-                       commandExtract.Extract(msg);
+                       commandExtract.Extract(finalMsg);
                         System.out.println("-----------------------------------------------------------");
                     }
                 }

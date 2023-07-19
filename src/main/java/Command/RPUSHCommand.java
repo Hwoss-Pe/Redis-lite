@@ -1,6 +1,7 @@
   package Command;
 import HashMapControl.SLHashMap;
 import Io.MultiWriteHandler;
+import Protocolutils.Protocol;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,11 +23,12 @@ import java.util.List;
 
         @Override
         public void execute() {
+            Protocol protocol = new Protocol();
+            String s ;
+            System.out.println("此时运行的是rpush命令");
             if(setArgs.size()<=1) {
-                MultiWriteHandler.setClient("至少需要两个参数");
-                return ;
-            }
-                System.out.println("此时运行的是rpush命令");
+                s = protocol.encodeServer("", "401");
+            }else {
                 HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
                 String key = setArgs.get(0);
                 String value = setArgs.get(1);
@@ -39,7 +41,9 @@ import java.util.List;
                 }
                 hml.put(key,linkedList);
                 SLHashMap.setHml(hml);
-                MultiWriteHandler.setClient("1");
+                s = protocol.encodeServer("", "200");
+            }
+            MultiWriteHandler.setClient(s);
         }
     }
 

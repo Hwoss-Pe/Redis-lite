@@ -1,6 +1,8 @@
 package Command;
         import Io.MultiWriteHandler;
         import HashMapControl.SSHashMap;
+        import Protocolutils.Protocol;
+
         import java.util.HashMap;
         import java.util.List;
 public class DELCommand implements Command {
@@ -21,14 +23,21 @@ public class DELCommand implements Command {
     @Override
     public void execute() {
         System.out.println("此时运行的是del命令");
+        String s ;
+        Protocol protocol = new Protocol();
         if(setArgs.size()<1){
-            MultiWriteHandler.setClient("至少需要一个参数");
-            return;
+             s = protocol.encodeServer("", "401");
+        }else {
+            String key = setArgs.get(0);
+            HashMap<String, String> hm = SSHashMap.getSSHashMap();
+            if(hm.containsKey(key)){
+                hm.put(key, null);
+                SSHashMap.setHm(hm);
+                s = protocol.encodeServer("", "200");
+            }else {
+                s = protocol.encodeServer("", "401");
+            }
         }
-        String key = setArgs.get(0);
-        HashMap<String, String> hm = SSHashMap.getSSHashMap();
-        hm.put(key, null);
-        MultiWriteHandler.setClient("删除该key的value成功");
-        SSHashMap.setHm(hm);
+        MultiWriteHandler.setClient(s);
     }
 }
