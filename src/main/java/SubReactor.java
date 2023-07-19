@@ -3,7 +3,7 @@ import Io.InputCheck2;
 import Io.MultiWriteHandler;
 import Command.CommandExtract;
 import Protocolutils.Protocol;
-import Time.LogPrint;
+import log.LogPrint;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

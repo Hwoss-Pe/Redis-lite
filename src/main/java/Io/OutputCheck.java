@@ -4,7 +4,7 @@ import HashMapControl.HashsetMap;
 import HashMapControl.SHHashMap;
 import HashMapControl.SLHashMap;
 import HashMapControl.SSHashMap;
-import Time.LogPrint;
+import log.LogPrint;
 import log.AppendFile;
 
 import java.io.FileInputStream;

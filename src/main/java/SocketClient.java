@@ -1,7 +1,7 @@
 import Command.SAVECommand;
 import Io.properties;
 import Protocolutils.Protocol;
-import Time.LogPrint;
+import log.LogPrint;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -40,7 +40,6 @@ public class SocketClient {
             LogPrint.logger.error("SocketChannel创建出现异常或者IO出错",e);
         }
         System.out.println(username + ">");
-
     }
 
     //向服务器发送消息

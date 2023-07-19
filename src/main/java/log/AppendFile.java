@@ -3,7 +3,6 @@ package log;
 import java.io.*;
 import Command.CommandExtract;
 import Io.properties;
-import Time.LogPrint;
 
 public class AppendFile {
 //

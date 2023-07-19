@@ -1,6 +1,6 @@
 import Io.properties;
 import Time.AutoSave;
-import Time.LogPrint;
+import log.LogPrint;
 import Time.delayHash;
 
 import java.io.IOException;

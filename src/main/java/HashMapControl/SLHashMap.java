@@ -1,7 +1,7 @@
 package HashMapControl;
 
 import Io.properties;
-import Time.LogPrint;
+import log.LogPrint;
 
 import java.io.*;
 import java.util.HashMap;

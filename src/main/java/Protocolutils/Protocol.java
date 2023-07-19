@@ -1,6 +1,6 @@
 package Protocolutils;
 
-import Time.LogPrint;
+import log.LogPrint;
 
 import java.util.HashMap;
 

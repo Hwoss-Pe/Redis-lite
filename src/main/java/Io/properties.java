@@ -1,10 +1,8 @@
 package Io;
 
-import Time.LogPrint;
-import org.junit.Test;
+import log.LogPrint;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
