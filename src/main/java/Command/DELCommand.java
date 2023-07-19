@@ -24,6 +24,7 @@ public class DELCommand implements Command {
     public void execute() {
         System.out.println("此时运行的是del命令");
         String s ;
+        String value;
         Protocol protocol = new Protocol();
         if(setArgs.size()<1){
              s = protocol.encodeServer("", "401");
@@ -31,9 +32,10 @@ public class DELCommand implements Command {
             String key = setArgs.get(0);
             HashMap<String, String> hm = SSHashMap.getSSHashMap();
             if(hm.containsKey(key)){
+                value = hm.get(key);
                 hm.put(key, null);
                 SSHashMap.setHm(hm);
-                s = protocol.encodeServer("", "200");
+                s = protocol.encodeServer(value, "200");
             }else {
                 s = protocol.encodeServer("", "401");
             }

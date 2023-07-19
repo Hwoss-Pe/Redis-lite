@@ -116,7 +116,6 @@ class SubReactor {
                     if (count > 0) {
                         //输出该消息
                         System.out.println("从客户端收到: " + finalMsg);
-
                         CommandExtract commandExtract   = new CommandExtract();
                        commandExtract.Extract(finalMsg);
                         System.out.println("-----------------------------------------------------------");

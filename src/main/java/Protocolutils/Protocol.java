@@ -68,17 +68,19 @@ public class Protocol {
         if(message == null) {
             message = "未处理的状态码";
         }
-        String dataLength = data.length()+"";
-
+        String dataLength = "0";
+        if(data!=null){
+           dataLength = data.length()+"";
+        }
         String reply = "protocol "+codeStr+" \n"+"Content-type:text/string\n" +
                 "Content-length:"+dataLength+'\n'+"message:"+message+"data:"+data;
         return reply;
     }
 //    //客户端处理响应报文的方法
     public  String decodeClient(String reply) {
-        String codeStr = null;
-        String message = null;
-        String data  = null;
+        String codeStr = "";
+        String message = "";
+        String data  = "";
         try {
             codeStr = reply.split(" ")[1];
             message = reply.split("message:")[1].split("data:")[0];
@@ -89,6 +91,9 @@ public class Protocol {
         }
         if(!data.equals("")) {
             data = "\n"+data;
+        }
+        if(codeStr.equals("")&&data.equals("")&&message.equals("")){
+            return "命令读取失败，客户端收到此信息";
         }
         return codeStr+" "+message+" "+data;
     }

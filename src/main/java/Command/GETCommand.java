@@ -22,24 +22,21 @@ public class GETCommand implements Command {
 
     @Override
     public void execute() {
+        System.out.println("此时运行的是get命令");
         Protocol protocol = new Protocol();
         String s ;
         if(setArgs.size()<1){
            s =  protocol.encodeServer("", "401");
-            MultiWriteHandler.setClient(s);
-            return ;
-        }
-        String key = setArgs.get(0);
-        System.out.println("此时运行的是get命令");
-
-        HashMap<String, String> hm = SSHashMap.getSSHashMap();
-        if(hm.containsKey(key)){
-            String value = hm.get(key);
-           s=  protocol.encodeServer(value, "200");
         }else{
-            s=  protocol.encodeServer("", "501");
+            String key = setArgs.get(0);
+            HashMap<String, String> hm = SSHashMap.getSSHashMap();
+            if(hm.containsKey(key)){
+                String value = hm.get(key);
+                s=  protocol.encodeServer(value, "200");
+            }else{
+                s=  protocol.encodeServer("", "501");
+            }
         }
         MultiWriteHandler.setClient(s);
     }
-
 }
