@@ -10,6 +10,7 @@ import java.util.List;
 public class CommandExtract {
     //    执行把输入的东西解析
     public Command Extract(String userInput)  {
+//        注意编码的问题，如果编码出错这里也会失效的
         String[] split = userInput.split("说：");
         Command command = null;
         try {
@@ -18,7 +19,7 @@ public class CommandExtract {
             LogPrint.logger.error("命令读入出现错误",e);
         }
         return command;
-//        注意返回的指令对象可能不存在，也就是错误的指令的时候
+//        注意返回的指令对象可能不存在，也就是错误的指令的时候，如果不存在就直接输出日志
     }
 
     public Command Command (String commandStr) {
@@ -43,6 +44,7 @@ public class CommandExtract {
                     AppendFile.tempFile(commandStr);
                     //命令合法就把命令存到追加文件
                     Command command = (Command) aClass.getDeclaredConstructor().newInstance();
+//                    设置对应的参数和命令的执行
                     command.setArgs(argList);
                     command.execute();
                     return command;
@@ -52,6 +54,7 @@ public class CommandExtract {
             }
         } catch (ClassNotFoundException e) {
             MultiWriteHandler.setClient("输入的命令错误");
+//            这里输出日志，而是返回给就客户端说是输入问题，程序正常运行
         }
         return null;
     }

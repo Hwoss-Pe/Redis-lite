@@ -23,6 +23,7 @@ public class SISMEMBERCommand implements Command{
     }
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
         Protocol protocol = new Protocol();
         String s ;
         System.out.println("此时运行的是sismember命令");
@@ -33,6 +34,7 @@ public class SISMEMBERCommand implements Command{
             String key = setArgs.get(0);
             String member =  setArgs.get(1);
             if(hms.containsKey(key)){
+//                先判断这个key存不存在，然后在判断这个里面有没有成员
                 HashSet<String> hs = hms.get(key);
                 if(hs.contains(member)){
                     s = protocol.encodeServer("", "200");

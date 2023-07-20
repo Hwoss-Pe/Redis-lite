@@ -31,6 +31,7 @@ public class GETCommand implements Command {
             String key = setArgs.get(0);
             HashMap<String, String> hm = SSHashMap.getSSHashMap();
             if(hm.containsKey(key)){
+//                注意key可能不存在的操作
                 String value = hm.get(key);
                 s=  protocol.encodeServer(value, "200");
             }else{

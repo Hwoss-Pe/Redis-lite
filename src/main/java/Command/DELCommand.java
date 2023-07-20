@@ -27,9 +27,11 @@ public class DELCommand implements Command {
         String value;
         Protocol protocol = new Protocol();
         if(setArgs.size()<1){
+//            参数处理判断
             s = protocol.encodeServer("", "401");
         }else {
             String key = setArgs.get(0);
+//            思路就是获取看看key存在，如何再去直接设置对应的key是null就可以
             HashMap<String, String> hm = SSHashMap.getSSHashMap();
             if(hm.containsKey(key)){
                 value = hm.get(key);
@@ -40,6 +42,7 @@ public class DELCommand implements Command {
                 s = protocol.encodeServer("", "401");
             }
         }
+//        发送的数据是加密的
         MultiWriteHandler.setClient(s);
     }
 }

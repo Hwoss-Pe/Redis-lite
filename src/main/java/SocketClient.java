@@ -92,10 +92,8 @@ public class SocketClient {
 
     public static void run()  {
 
-        //启动我们客户端
+        //启动客户端
         SocketClient chatClient = new SocketClient();
-
-
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             SAVECommand saveCommand = new SAVECommand();
@@ -118,6 +116,7 @@ public class SocketClient {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             System.out.println(HOST+":"+ PORT+">");
+//            输出的是对应模仿redis的输入提示，这里我没去弄同步输入
             String s = scanner.nextLine();
             chatClient.sendInfo(s);
         }

@@ -25,10 +25,12 @@ public class  LPOPCommand implements Command{
 
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
         System.out.println("此时运行的是lpop命令");
         Protocol protocol = new Protocol();
         String s ;
         if(setArgs.size()<1) {
+//            参数处理
             s = protocol.encodeServer("", "401");
         }else {
             HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();

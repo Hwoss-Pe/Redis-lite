@@ -22,6 +22,8 @@ public class SETCommand implements Command {
 
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
+//        设置后更新数据到类
         Protocol protocol = new Protocol();
         String s;
         if(setArgs.size()<=1){

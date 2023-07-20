@@ -33,6 +33,7 @@ public class HSETCommand implements Command {
             String key2 = setArgs.get(1);
             String value = setArgs.get(2);
             HashMap<String ,String> hm = new HashMap<>();
+//            设置改变的类里面的数据，也就是缓存
             hm.put(key2,value);
             HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
             hmh.put(key1,hm);

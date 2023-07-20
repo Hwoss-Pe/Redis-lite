@@ -42,7 +42,7 @@ class SocketServer {
             LogPrint.logger.error("listenChannel出现异常",e);
         }
     }
-    //监听
+    //监听reactor线程
     public void listen() {
         System.out.println("监听线程主reactor: " + Thread.currentThread().getName());
         System.out.println("-----------------------------------------------------------");
@@ -57,7 +57,6 @@ class SocketServer {
                     while (iterator.hasNext()) {
                         //取出selectionKey
                         SelectionKey key = iterator.next();
-
                         //监听到accept
                         if(key.isAcceptable()) {
 //                            判断通道是否已经连接
@@ -102,6 +101,7 @@ class SocketServer {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+//                也就是每十分钟就后台自动保存
                 AutoSave autoSave = new AutoSave();
                 autoSave.execute();
             }

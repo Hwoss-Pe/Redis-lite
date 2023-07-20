@@ -24,6 +24,7 @@ public class LENCommand implements Command {
         String s ;
         System.out.println("此时运行的是len命令");
         if (setArgs.size()==0){
+//            参数判断
             s = protocol.encodeServer("", "401");
         }else {
             String key = setArgs.get(0);
@@ -37,6 +38,7 @@ public class LENCommand implements Command {
                 else{
                     size = linkedList.size();
                 }
+//                返回的数据需要有size，默认是0防止null的调用
                 s = protocol.encodeServer(size+"", "200");
             }else{
                 s = protocol.encodeServer("", "501");

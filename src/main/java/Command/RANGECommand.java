@@ -23,6 +23,7 @@ public class RANGECommand implements Command{
 
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
         System.out.println("此时运行的是range命令");
         Protocol protocol = new Protocol();
         String s ;
@@ -36,9 +37,11 @@ public class RANGECommand implements Command{
             int length = end - start;
             LinkedList<String> linkedList = hml.get(key);
             if (linkedList == null) {
+//               判断集合是否存在
                 s = protocol.encodeServer("没有链表", "404");
             }
             if (start < 0 || end < 0 || length > linkedList.size() || length < 0 || end > linkedList.size() - 1) {
+//                对一些特殊情况进行处理
                 s = protocol.encodeServer("非法输入，索引不存在或者越界", "404");
             } else {
                 StringBuilder str = new StringBuilder();

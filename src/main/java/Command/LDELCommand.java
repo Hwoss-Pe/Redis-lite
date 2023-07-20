@@ -33,11 +33,13 @@ public class LDELCommand implements Command {
             String key = setArgs.get(0);
             HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
             if(hml.containsKey(key)){
+                //                    参数判断和key的判断
                 LinkedList<String> linkedList = hml.get(key);
                 if(linkedList!=null){
                     linkedList.clear();
                     s = protocol.encodeServer("", "200");
                 }else{
+//                    通过集合是null直接返回客户端报错
                     s = protocol.encodeServer("", "404");
                 }
             }else{

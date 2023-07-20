@@ -20,6 +20,7 @@ public class AutoSave {
 
     public void execute() {
         Thread saveThread = new Thread(() -> {
+//            自动保存机制就是后台保存
             OutputCheck.output();
             System.out.println("后台保存成功");
         });

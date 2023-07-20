@@ -7,5 +7,5 @@ public interface Command {
     void setArgs(List<String> list);
     //    保存输入的参数
     void execute();
-//    注意方法的返回值
+//    执行相对的命令的方法
 }

@@ -13,6 +13,8 @@ public class properties {
     public static String property(String key )  {
         Properties properties = new Properties();
         try {
+
+//            创建文件流去读取配置文件，返回一个
             FileInputStream fileInputStream = new FileInputStream("..\\Test444\\src\\main\\resources\\config.properties");
             properties.load(fileInputStream);
             fileInputStream.close();
@@ -20,5 +22,6 @@ public class properties {
             LogPrint.logger.error("读入配置文件异常",e);
         }
         return properties.getProperty(key);
+//        返回值的是配置文件里面的词条值
     }
 }

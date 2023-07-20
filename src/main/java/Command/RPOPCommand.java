@@ -25,6 +25,7 @@ public class RPOPCommand implements Command{
 
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
         Protocol protocol = new Protocol();
         String s ;
         System.out.println("此时运行的是rpop命令");
@@ -35,6 +36,7 @@ public class RPOPCommand implements Command{
             String key = setArgs.get(0);
             LinkedList<String> linkedList = hml.get(key);
             if(linkedList==null||linkedList.size()==0){
+//                对删除的集合进行判断
                 s = protocol.encodeServer("key错误或者该集合为空", "404");
             }else{
                 String removing = linkedList.removeLast();

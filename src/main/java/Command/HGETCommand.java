@@ -29,6 +29,7 @@ public class HGETCommand implements Command {
         String key2 = setArgs.get(1);
         System.out.println("此时运行的是hget命令");
         if(setArgs.size()<=1){
+//            参数判断
             s = protocol.encodeServer("", "401");
 
         }else {
@@ -38,6 +39,7 @@ public class HGETCommand implements Command {
                 String value = hm.get(key2);
                 s = protocol.encodeServer(value, "200");
             } else {
+//                套路和其他命令都是一样的
                 s = protocol.encodeServer("", "501");
             }
         }

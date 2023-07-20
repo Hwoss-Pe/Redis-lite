@@ -27,6 +27,7 @@ public class HDELCommand implements Command {
         HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
         Protocol protocol = new Protocol();
         String s ;
+//        通过参数来判断是哪种的删除方式
         if(setArgs.size()<1){
             s =  protocol.encodeServer("", "401");
             return;

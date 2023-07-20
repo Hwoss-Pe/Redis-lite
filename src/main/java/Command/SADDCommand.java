@@ -23,6 +23,7 @@ public class SADDCommand implements Command{
     }
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
         Protocol protocol = new Protocol();
         String s ;
         System.out.println("此时运行的是sadd命令");

@@ -28,6 +28,7 @@ public class SAVECommand implements Command {
 
     @Override
     public void execute() {
+//        手动保存方法调用
         Protocol protocol = new Protocol();
         String s ;
         System.out.println("此时运行的是save命令");

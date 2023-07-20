@@ -7,6 +7,8 @@ import java.io.*;
 import java.util.HashMap;
 
 public class SSHashMap {
+    //    为了方便调用。采用都是static方法的进行操作，在其他指令的时候就可以获取修改，然后再设置回来
+//    采用的思路都是一样的,详细看HashsetMap类
     //    static String HashMapAddress = "..\\Test444\\Datas1.bin";
     static String HashMapAddress;
     static  HashMap<String, String> hm = new HashMap<>();

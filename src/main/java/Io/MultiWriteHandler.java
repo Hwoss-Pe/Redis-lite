@@ -17,11 +17,13 @@ public class MultiWriteHandler {
     private final ByteBuffer buffer;
 
     public MultiWriteHandler(SelectionKey key) {
+//        用过key来获取对应的通道
         this.key = key;
         this.buffer = ByteBuffer.allocate(1024);
     }
 
     public void run() {
+//        多线程运行来发送数据给客户端
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 //        这里有服务端通信延迟
         executorService.submit(new Runnable() {
@@ -33,10 +35,11 @@ public class MultiWriteHandler {
                     while (true) {
                         if (scanner.hasNextLine()) {
                             String message = scanner.nextLine();
+//                            这里主动阻塞数据防止循环一直发送
                             buffer.clear();
                             buffer.put(message.getBytes());
                             buffer.flip();
-
+//是                             设置可读
                             while (buffer.hasRemaining()) {
                                 channel.write(buffer);
                             }
@@ -55,8 +58,10 @@ public class MultiWriteHandler {
     public static void setClient(String message) {
         try {
             if(key != null) {
+//                同一个key去获取通道
                 SocketChannel channel = (SocketChannel) key.channel();
                 Charset charset = StandardCharsets.UTF_8;
+//                设置发送信息的编码
                 channel.write(charset.encode(message));
             }
         } catch (IOException e) {

@@ -23,6 +23,7 @@ public class RPUSHCommand implements Command{
 
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
         Protocol protocol = new Protocol();
         String s ;
         System.out.println("此时运行的是rpush命令");
@@ -42,6 +43,7 @@ public class RPUSHCommand implements Command{
             hml.put(key,linkedList);
             SLHashMap.setHml(hml);
             s = protocol.encodeServer("", "200");
+//            思路和lpush一样，调用现成的方法
         }
         MultiWriteHandler.setClient(s);
     }

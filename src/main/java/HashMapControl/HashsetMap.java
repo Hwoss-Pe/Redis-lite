@@ -8,12 +8,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class HashsetMap {
+//    为了方便调用。采用都是static方法的进行操作，在其他指令的时候就可以获取修改，然后再设置回来
     static String SetMap ;
     static HashMap<String, HashSet<String>> hms = new HashMap<String, HashSet<String>>();
     public static HashMap<String, HashSet<String>> input() {
         try {
+//            从配置文件里面读取这个的路径
             SetMap= properties.property("HashsetMap");
             File file = new File(SetMap);
+//            创建文件读取
             if (file.exists()) {
                 //导入
                 ObjectInputStream ois = null;
@@ -30,13 +33,14 @@ public class HashsetMap {
         return hms;
     }
 
-    // 写入文件
+    // 写入文件    //    这里就写一个写进去文件的方法，理解成手动刷盘
     public static void output(HashMap<String, HashSet<String>> hms)  {
         File file = new File(SetMap);
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(SetMap));
         } catch (IOException e) {
+//            获取文件失败
             LogPrint.logger.error("获取文件流失败",e);
         }
         if (file.exists()) {
@@ -45,6 +49,7 @@ public class HashsetMap {
                     oos.writeObject(hms);
                     oos.flush();
                 } catch (IOException e) {
+//                    日志文件写入
                     LogPrint.logger.error("读入失败",e);
                 }
             }
@@ -54,6 +59,7 @@ public class HashsetMap {
                 if (created) {
                     System.out.println("Data4文件创建成功。");
                     if (hms != null) {
+//                       调用流的写入就可以了
                         oos.writeObject(hms);
                         oos.flush();
                         oos.close();
@@ -66,9 +72,11 @@ public class HashsetMap {
             }
         }
     }
+//    获取当前类的哈希的方法
     public static HashMap<String, HashSet<String>> getSetMap(){
         return hms;
     }
+//    更新当前类的哈希的方法
     public static void setHms(HashMap<String, HashSet<String>> setHashMap) {
         hms = setHashMap;
     }

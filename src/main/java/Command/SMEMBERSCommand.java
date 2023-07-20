@@ -23,6 +23,7 @@ public class SMEMBERSCommand implements Command{
     }
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
         Protocol protocol = new Protocol();
         String s ;
         System.out.println("此时运行的是smembers命令");
@@ -35,6 +36,7 @@ public class SMEMBERSCommand implements Command{
                 String result = "";
                 HashSet<String> hs = hms.get(key);
                 for (String str : hs) {
+//                   拼接好里面的数据然后一起返回，单独的返回会出错线程并发
                     result = result+" "+str;
                 }
                 s = protocol.encodeServer(result, "200");

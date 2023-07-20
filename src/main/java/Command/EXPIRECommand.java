@@ -27,12 +27,14 @@ public class EXPIRECommand implements Command{
         String s ;
         Protocol protocol = new Protocol();
         if(setArgs.size()<=1){
+//            参数出处理
             s = protocol.encodeServer("", "401");
         }else{
             delayHash delayHash = new delayHash();
             // 设置键的过期时间
             String key = setArgs.get(0);
             String expire = setArgs.get(1);
+//            设置的方法
             delayHash.setKeyExpiration(key, Long.parseLong(expire));
             s = protocol.encodeServer("", "200");
         }

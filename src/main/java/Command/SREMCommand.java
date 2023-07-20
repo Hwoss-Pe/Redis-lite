@@ -23,6 +23,7 @@ public class SREMCommand implements Command{
     }
     @Override
     public void execute() {
+        //套路判断参数就是加密返回的数据后进行发送给客户端
         Protocol protocol = new Protocol();
         String s ;
         System.out.println("此时运行的是srem命令");
@@ -33,6 +34,7 @@ public class SREMCommand implements Command{
             String key = setArgs.get(0);
             String member = setArgs.get(1);
             if(hms.containsKey(key)){
+//                还是去判断是否有没有数据进行操作
                 HashSet<String> hs = hms.get(key);
                 if(hs.contains(member)){
                     hs.remove(member);
