@@ -93,7 +93,7 @@ class SocketServer {
         this.subReactor.run();
     }
 
-    public static void main(String[] args)  {
+    public static  void run()  {
         //创建服务器对象
         SocketServer socketServer = new SocketServer();
         socketServer.addSub(new SubReactor());
