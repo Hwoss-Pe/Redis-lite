@@ -11,61 +11,61 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 class SocketServer {
-    //¶¨ÒåÊôĞÔ
+    //å®šä¹‰å±æ€§
     private Selector selector;
     private ServerSocketChannel listenChannel;
     private static  int PORT ;
     private SubReactor subReactor;
 
-    //¹¹ÔìÆ÷
-    //³õÊ¼»¯¹¤×÷
+    //æ„é€ å™¨
+    //åˆå§‹åŒ–å·¥ä½œ
     public SocketServer() {
         String PORTStr = null;
         PORTStr = properties.property("PORT");
         if(PORTStr != null){
             PORT = Integer.parseInt(PORTStr);
         }else{
-            LogPrint.logger.error("ÅäÖÃ¶Ë¿Ú³ö´í");
+            LogPrint.logger.error("é…ç½®ç«¯å£å‡ºé”™");
         }
         try {
-            //µÃµ½Ñ¡ÔñÆ÷
+            //å¾—åˆ°é€‰æ‹©å™¨
             selector = Selector.open();
             //ServerSocketChannel
             listenChannel =  ServerSocketChannel.open();
-            //°ó¶¨¶Ë¿Ú
+            //ç»‘å®šç«¯å£
             listenChannel.socket().bind(new InetSocketAddress(PORT));
-            //ÉèÖÃ·Ç×èÈûÄ£Ê½
+            //è®¾ç½®éé˜»å¡æ¨¡å¼
             listenChannel.configureBlocking(false);
-            //½«¸ÃlistenChannel ×¢²áµ½selector
+            //å°†è¯¥listenChannel æ³¨å†Œåˆ°selector
             listenChannel.register(selector, SelectionKey.OP_ACCEPT);
         }catch (IOException e) {
-            LogPrint.logger.error("listenChannel³öÏÖÒì³£",e);
+            LogPrint.logger.error("listenChannelå‡ºç°å¼‚å¸¸",e);
         }
     }
-    //¼àÌı
+    //ç›‘å¬
     public void listen() {
-        System.out.println("¼àÌıÏß³ÌÖ÷reactor: " + Thread.currentThread().getName());
+        System.out.println("ç›‘å¬çº¿ç¨‹ä¸»reactor: " + Thread.currentThread().getName());
         System.out.println("-----------------------------------------------------------");
         try {
-            //Ñ­»·´¦Àí
+            //å¾ªç¯å¤„ç†
             while (true) {
                 int count = selector.select();
-//                Í¨µÀ»á½øĞĞ×èÈû²¢ÇÒ·µ»Øµ±Ç°Í¨µÀ¾ÍĞ÷µÄÊıÁ¿£¬Ö±µ½ÖÁÉÙÓĞÒ»¸ö×¢²áµ½ Selector ÉÏµÄ Channel ¾ÍĞ÷¡£
-                if(count > 0) {//ÓĞÊÂ¼ş´¦Àí
-                    //±éÀúµÃµ½selectionKey ¼¯ºÏ
+//                é€šé“ä¼šè¿›è¡Œé˜»å¡å¹¶ä¸”è¿”å›å½“å‰é€šé“å°±ç»ªçš„æ•°é‡ï¼Œç›´åˆ°è‡³å°‘æœ‰ä¸€ä¸ªæ³¨å†Œåˆ° Selector ä¸Šçš„ Channel å°±ç»ªã€‚
+                if(count > 0) {//æœ‰äº‹ä»¶å¤„ç†
+                    //éå†å¾—åˆ°selectionKey é›†åˆ
                     Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
                     while (iterator.hasNext()) {
-                        //È¡³öselectionKey
+                        //å–å‡ºselectionKey
                         SelectionKey key = iterator.next();
 
-                        //¼àÌıµ½accept
+                        //ç›‘å¬åˆ°accept
                         if(key.isAcceptable()) {
-//                            ÅĞ¶ÏÍ¨µÀÊÇ·ñÒÑ¾­Á¬½Ó
-                             //Ö÷Reactor¼àÌı
+//                            åˆ¤æ–­é€šé“æ˜¯å¦å·²ç»è¿æ¥
+                             //ä¸»Reactorç›‘å¬
                             SocketChannel sc = listenChannel.accept();
                             sc.configureBlocking(false);
-                            //ÌáÊ¾
-                            System.out.println(sc.getRemoteAddress() + " Æô¶¯ ");
+                            //æç¤º
+                            System.out.println(sc.getRemoteAddress() + " å¯åŠ¨ ");
                             System.out.println("-----------------------------------------------------------");
 
                             if(subReactor==null){
@@ -75,26 +75,26 @@ class SocketServer {
                                 subReactor.register(sc);
                             }
                         }
-                        //µ±Ç°µÄkey É¾³ı£¬·ÀÖ¹ÖØ¸´´¦Àí
+                        //å½“å‰çš„key åˆ é™¤ï¼Œé˜²æ­¢é‡å¤å¤„ç†
                         iterator.remove();
                     }
                 } else {
-                    System.out.println("µÈ´ı....");
+                    System.out.println("ç­‰å¾…....");
                 }
             }
 
         }catch (Exception e) {
-            LogPrint.logger.error("¼àÌı³öÏÖÒì³£",e);
+            LogPrint.logger.error("ç›‘å¬å‡ºç°å¼‚å¸¸",e);
         }
     }
-//Ìí¼Ó×Óreactor
+//æ·»åŠ å­reactor
     public void addSub(SubReactor subReactor){
         this.subReactor=subReactor;
         this.subReactor.run();
     }
 
     public static  void run()  {
-        //´´½¨·şÎñÆ÷¶ÔÏó
+        //åˆ›å»ºæœåŠ¡å™¨å¯¹è±¡
         SocketServer socketServer = new SocketServer();
         socketServer.addSub(new SubReactor());
         delayHash delayHash = new delayHash();
@@ -106,7 +106,7 @@ class SocketServer {
                 autoSave.execute();
             }
         };
-        // ÔÚ³ÌĞòÆô¶¯ºóÑÓ³Ù10ÃëÖÓÖ´ĞĞ¶¨Ê±ÈÎÎñ£¬È»ºóÃ¿¸ôÒ»·ÖÖÓÖ´ĞĞÒ»´Î
+        // åœ¨ç¨‹åºå¯åŠ¨åå»¶è¿Ÿ10ç§’é’Ÿæ‰§è¡Œå®šæ—¶ä»»åŠ¡ï¼Œç„¶åæ¯éš”ä¸€åˆ†é’Ÿæ‰§è¡Œä¸€æ¬¡
         timer.schedule(task, 10000, 60*1000);
         socketServer.listen();
 

@@ -25,7 +25,7 @@ public class  LPOPCommand implements Command{
 
     @Override
     public void execute() {
-        System.out.println("此时运行的是lpop命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸lpop鍛戒护");
         Protocol protocol = new Protocol();
         String s ;
         if(setArgs.size()<1) {
@@ -35,7 +35,7 @@ public class  LPOPCommand implements Command{
             String key = setArgs.get(0);
             LinkedList<String> linkedList = hml.get(key);
             if(linkedList==null||linkedList.size()==0){
-                s = protocol.encodeServer("key错误或者该集合为空", "404");
+                s = protocol.encodeServer("key閿欒鎴栬�呰闆嗗悎涓虹┖", "404");
             }else{
                 String removing = linkedList.removeFirst();
                 hml.put(key,linkedList);

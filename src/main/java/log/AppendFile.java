@@ -6,32 +6,32 @@ import Io.properties;
 
 public class AppendFile {
 //
-//    Ã¿´ÎÊÖ¶¯±£´æºÍ×Ô¶¯±£´æºÍºóÌ¨±£´æµÄÊ±ºò¾Í°ÑÈÕÖ¾ÎÄ¼şÇå¿Õ
-//            È»ºóÊäÈëµÄÃüÁîÖ»Òª·ûºÏ¾Í×·¼ÓĞ´½øÈë
-//    ÄÇÃ´µ½Ê±¾Í»áÓĞÒ»¶ÑÎÄ¼ş²ÉÓÃ»»ĞĞÀ´¸ô¿ª£¬Ã¿´Î»»ĞĞ´ú±íÒ»¸öÃüÁî
-//    »Ö¸´µÄÊ±ºò¾Í´ÓÎÄ¼ş¶ÁÈ¡£¬È»ºóÓÃ»»ĞĞ·Ö¿ªÃ¿¾äÃüÁî×îºó°¤¸öÖ´ĞĞ£¬Çå¿ÕÒ²ÒªÇå¿ÕÈÕÖ¾
+//    æ¯æ¬¡æ‰‹åŠ¨ä¿å­˜å’Œè‡ªåŠ¨ä¿å­˜å’Œåå°ä¿å­˜çš„æ—¶å€™å°±æŠŠæ—¥å¿—æ–‡ä»¶æ¸…ç©º
+//            ç„¶åè¾“å…¥çš„å‘½ä»¤åªè¦ç¬¦åˆå°±è¿½åŠ å†™è¿›å…¥
+//    é‚£ä¹ˆåˆ°æ—¶å°±ä¼šæœ‰ä¸€å †æ–‡ä»¶é‡‡ç”¨æ¢è¡Œæ¥éš”å¼€ï¼Œæ¯æ¬¡æ¢è¡Œä»£è¡¨ä¸€ä¸ªå‘½ä»¤
+//    æ¢å¤çš„æ—¶å€™å°±ä»æ–‡ä»¶è¯»å–ï¼Œç„¶åç”¨æ¢è¡Œåˆ†å¼€æ¯å¥å‘½ä»¤æœ€åæŒ¨ä¸ªæ‰§è¡Œï¼Œæ¸…ç©ºä¹Ÿè¦æ¸…ç©ºæ—¥å¿—
 
-     static   String  LOGFILE;
-     static {
-         LOGFILE = properties.property("appendFile");
-     }
-     static String commands = "";
-    // Çå¿ÕÈÕÖ¾ÎÄ¼ş
+    static   String  LOGFILE;
+    static {
+        LOGFILE = properties.property("appendFile");
+    }
+    static String commands = "";
+    // æ¸…ç©ºæ—¥å¿—æ–‡ä»¶
     public static void clearLogFile() {
-                commands="";
+        commands="";
     }
 
-    // ½«ÃüÁî×·¼Óµ½ÈÕÖ¾ÎÄ¼şÖĞ
+    // å°†å‘½ä»¤è¿½åŠ åˆ°æ—¥å¿—æ–‡ä»¶ä¸­
     public static void saveCommand() {
         try (FileWriter writer = new FileWriter(LOGFILE, true)) {
             writer.write(commands);
             clearLogFile();
         } catch (IOException e) {
-            LogPrint.logger.error("ÊÖ¶¯save±£´æÃüÁî³ö´í",e);
+            LogPrint.logger.error("æ‰‹åŠ¨saveä¿å­˜å‘½ä»¤å‡ºé”™",e);
         }
     }
 
-    // ´ÓÈÕÖ¾ÎÄ¼şÖĞ¶ÁÈ¡ÃüÁî²¢ÇÒÖ´ĞĞ
+    // ä»æ—¥å¿—æ–‡ä»¶ä¸­è¯»å–å‘½ä»¤å¹¶ä¸”æ‰§è¡Œ
     public static void loadCommands() {
         try (BufferedReader reader = new BufferedReader(new FileReader(LOGFILE))) {
             String line;
@@ -40,17 +40,17 @@ public class AppendFile {
                 String[] commands = line.split("\\*");
                 for (String command : commands) {
                     if(!command.equals("save"))
-                   extract.Command(command);
+                        extract.Command(command);
                 }
-                System.out.println("Ö´ĞĞ»Ö¸´³É¹¦");
+                System.out.println("æ‰§è¡Œæ¢å¤æˆåŠŸ");
             }
             clearLogFile();
         } catch (IOException e) {
-            LogPrint.logger.error("¶ÁÈ¡»º´æÊı¾İ³ö´í",e);
+            LogPrint.logger.error("è¯»å–ç¼“å­˜æ•°æ®å‡ºé”™",e);
         }
     }
     public  static  void tempFile(String command){
-//        ÕâÀï¾Í´æÈ¡ÄÇĞ©»º´æµÄÃüÁî
-         commands = commands+command+"*";
+//        è¿™é‡Œå°±å­˜å–é‚£äº›ç¼“å­˜çš„å‘½ä»¤
+        commands = commands+command+"*";
     }
 }

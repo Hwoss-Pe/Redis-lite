@@ -9,7 +9,7 @@ import java.util.Properties;
 
 
 public class properties {
-//    ×¨ÃÅÀ´¶ÁÈ¡ÅäÖÃÎÄ¼ş
+    //    ä¸“é—¨æ¥è¯»å–é…ç½®æ–‡ä»¶
     public static String property(String key )  {
         Properties properties = new Properties();
         try {
@@ -17,7 +17,7 @@ public class properties {
             properties.load(fileInputStream);
             fileInputStream.close();
         } catch (IOException e) {
-            LogPrint.logger.error("¶ÁÈëÅäÖÃÎÄ¼şÒì³£",e);
+            LogPrint.logger.error("è¯»å…¥é…ç½®æ–‡ä»¶å¼‚å¸¸",e);
         }
         return properties.getProperty(key);
     }

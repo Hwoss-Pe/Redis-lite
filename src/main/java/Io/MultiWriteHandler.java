@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +23,7 @@ public class MultiWriteHandler {
 
     public void run() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-//        ÕâÀïÓĞ·şÎñ¶ËÍ¨ĞÅÑÓ³Ù
+//        è¿™é‡Œæœ‰æœåŠ¡ç«¯é€šä¿¡å»¶è¿Ÿ
         executorService.submit(new Runnable() {
             @Override
             public void run() {
@@ -40,11 +41,11 @@ public class MultiWriteHandler {
                                 channel.write(buffer);
                             }
 
-                            System.out.println("·¢ËÍ¸ø¿Í»§¶ËĞÅÏ¢: " + message);
+                            System.out.println("å‘é€ç»™å®¢æˆ·ç«¯ä¿¡æ¯: " + message);
                         }
                     }
                 } catch (IOException e) {
-                    LogPrint.logger.error("SocketChannel´´½¨³öÏÖÒì³£»òÕßIO³ö´í",e);
+                    LogPrint.logger.error("SocketChannelåˆ›å»ºå‡ºç°å¼‚å¸¸æˆ–è€…IOå‡ºé”™",e);
                 }
             }
         });
@@ -52,14 +53,14 @@ public class MultiWriteHandler {
 
 
     public static void setClient(String message) {
-                try {
-                    if(key != null) {
-                        SocketChannel channel = (SocketChannel) key.channel();
-                        Charset charset = Charset.forName("GBK");
-                        channel.write(charset.encode(message));
-                    }
-                } catch (IOException e) {
-                    LogPrint.logger.error("SocketChannelµÄkey³ö´í",e);
-                }
+        try {
+            if(key != null) {
+                SocketChannel channel = (SocketChannel) key.channel();
+                Charset charset = StandardCharsets.UTF_8;
+                channel.write(charset.encode(message));
+            }
+        } catch (IOException e) {
+            LogPrint.logger.error("SocketChannelçš„keyå‡ºé”™",e);
+        }
     }
 }

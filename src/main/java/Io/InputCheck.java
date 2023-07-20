@@ -13,8 +13,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Properties;
 
-public class InputCheck2 {
-    //   Õâ¸ö²»Í¬ÓÚinput£¬Êä³öÊÇÒ»ÆğÊä³ö³öÈ¥£¬°ó¶¨µÄ£»
+public class InputCheck {
+    //   è¿™ä¸ªä¸åŒäºinputï¼Œè¾“å‡ºæ˜¯ä¸€èµ·è¾“å‡ºå‡ºå»ï¼Œç»‘å®šçš„ï¼›
     private HashMap<String, HashSet<String>> hms = new HashMap<String, HashSet<String>>();
     private HashMap<String, HashMap<String,String>> hmh = new HashMap<>();
     private HashMap<String, LinkedList<String>> hml = new HashMap<>();
@@ -24,8 +24,8 @@ public class InputCheck2 {
 
     public static void input()  {
         String persistenceMethod = "dataPersistence";
-//            Ä¬ÈÏ²ÉÓÃÊı¾İ³Ö¾Ã»¯
-            persistenceMethod =  properties.property("persistenceMethod");
+//            é»˜è®¤é‡‡ç”¨æ•°æ®æŒä¹…åŒ–
+        persistenceMethod =  properties.property("persistenceMethod");
         if (persistenceMethod.equals("dataPersistence")) {
             HashMap<String, String> hm = SSHashMap.input();
             HashMap<String, LinkedList<String>> hml = SLHashMap.input();
@@ -46,9 +46,9 @@ public class InputCheck2 {
             SLHashMap.output(hml);
             SHHashMap.output(hmh);
             HashsetMap.output(hms);
-            System.out.println("Á½ÖÖÈÕÖ¾Ò»Æğ");
+            System.out.println("ä¸¤ç§æ—¥å¿—ä¸€èµ·");
         }else{
-            MultiWriteHandler.setClient("ÅäÖÃÎÄ¼ş³Ö¾Ã»¯·½·¨³ö´í");
+            MultiWriteHandler.setClient("é…ç½®æ–‡ä»¶æŒä¹…åŒ–æ–¹æ³•å‡ºé”™");
         }
     }
 }

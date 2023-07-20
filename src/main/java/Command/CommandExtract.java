@@ -8,27 +8,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandExtract {
-//    Ö´ĞĞ°ÑÊäÈëµÄ¶«Î÷½âÎö
+    //    æ‰§è¡ŒæŠŠè¾“å…¥çš„ä¸œè¥¿è§£æ
     public Command Extract(String userInput)  {
-        String[] split = userInput.split("Ëµ£º");
+        String[] split = userInput.split("è¯´ï¼š");
         Command command = null;
         try {
             command = Command(split[1]);
         } catch (Exception e) {
-            LogPrint.logger.error("ÃüÁî¶ÁÈë³öÏÖ´íÎó",e);
+            LogPrint.logger.error("å‘½ä»¤è¯»å…¥å‡ºç°é”™è¯¯",e);
         }
         return command;
-//        ×¢Òâ·µ»ØµÄÖ¸Áî¶ÔÏó¿ÉÄÜ²»´æÔÚ£¬Ò²¾ÍÊÇ´íÎóµÄÖ¸ÁîµÄÊ±ºò
+//        æ³¨æ„è¿”å›çš„æŒ‡ä»¤å¯¹è±¡å¯èƒ½ä¸å­˜åœ¨ï¼Œä¹Ÿå°±æ˜¯é”™è¯¯çš„æŒ‡ä»¤çš„æ—¶å€™
     }
 
     public Command Command (String commandStr) {
         List<String> argList = new ArrayList<>();
         String[] s = commandStr.split(" ");
-//        ÕâÀï¾ÍÊÇ»ñÈ¡ÃüÁî±ÈÈçset
+//        è¿™é‡Œå°±æ˜¯è·å–å‘½ä»¤æ¯”å¦‚set
         String newString = s[0].trim();
-//        Õâ¸öÊÇ»ñÈ¡²ÎÊı
+//        è¿™ä¸ªæ˜¯è·å–å‚æ•°
         String[] strings =commandStr.split("\\s+");
-//        ÕâÀï´ÓÒ»¿ªÊ¼±£Ö¤ÃüÁî²»½øÈ¥
+//        è¿™é‡Œä»ä¸€å¼€å§‹ä¿è¯å‘½ä»¤ä¸è¿›å»
         for (int i = 1; i < strings.length; i++) {
             argList.add(strings[i]);
         }
@@ -39,19 +39,19 @@ public class CommandExtract {
             aClass = Class.forName(newString);
             if(Command.class.isAssignableFrom(aClass)){
                 try {
-//        Èç¹ûÊÇÓĞĞ§µÄÃüÁî£¬ÄÇÃ´½âÎöÀ´¾ÍÊÇ´´½¨¶ÔÏó²¢ÇÒ´«Èë²ÎÊı£¬²¢ÇÒĞ´Èë×·¼ÓÎÄ¼ş
+//        å¦‚æœæ˜¯æœ‰æ•ˆçš„å‘½ä»¤ï¼Œé‚£ä¹ˆè§£ææ¥å°±æ˜¯åˆ›å»ºå¯¹è±¡å¹¶ä¸”ä¼ å…¥å‚æ•°ï¼Œå¹¶ä¸”å†™å…¥è¿½åŠ æ–‡ä»¶
                     AppendFile.tempFile(commandStr);
-                    //ÃüÁîºÏ·¨¾Í°ÑÃüÁî´æµ½×·¼ÓÎÄ¼ş
+                    //å‘½ä»¤åˆæ³•å°±æŠŠå‘½ä»¤å­˜åˆ°è¿½åŠ æ–‡ä»¶
                     Command command = (Command) aClass.getDeclaredConstructor().newInstance();
                     command.setArgs(argList);
                     command.execute();
                     return command;
                 } catch (Exception e) {
-                    LogPrint.logger.error("ÃüÁîÖ´ĞĞÊ§°Ü",e);
+                    LogPrint.logger.error("å‘½ä»¤æ‰§è¡Œå¤±è´¥",e);
                 }
             }
         } catch (ClassNotFoundException e) {
-            MultiWriteHandler.setClient("ÊäÈëµÄÃüÁî´íÎó");
+            MultiWriteHandler.setClient("è¾“å…¥çš„å‘½ä»¤é”™è¯¯");
         }
         return null;
     }

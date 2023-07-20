@@ -25,13 +25,13 @@ public class SADDCommand implements Command{
     public void execute() {
         Protocol protocol = new Protocol();
         String s ;
-        System.out.println("´ËÊ±ÔËĞĞµÄÊÇsaddÃüÁî");
+        System.out.println("æ­¤æ—¶è¿è¡Œçš„æ˜¯saddå‘½ä»¤");
         if(setArgs.size()==0){
             s = protocol.encodeServer("", "401");
         }else {
             HashMap<String, HashSet<String>> hms = HashsetMap.getSetMap();
             String key = setArgs.get(0);
-//        ÓĞ¸öË¼Â·¾ÍÊÇÔÚÔ­À´µÄ²ÎÊıÊı×éÀïÃæÈ¥µôµÚÒ»¸öÊı×é¾Í¿ÉÒÔÁËÊ£ÏÂ×÷Îª²ÎÊı
+//        æœ‰ä¸ªæ€è·¯å°±æ˜¯åœ¨åŸæ¥çš„å‚æ•°æ•°ç»„é‡Œé¢å»æ‰ç¬¬ä¸€ä¸ªæ•°ç»„å°±å¯ä»¥äº†å‰©ä¸‹ä½œä¸ºå‚æ•°
             setArgs.remove(0);
             HashSet<String> hs = new HashSet<>(setArgs);
             hms.put(key, hs);

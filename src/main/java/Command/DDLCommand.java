@@ -23,7 +23,7 @@ public class DDLCommand implements Command{
 
     @Override
     public void execute() {
-        System.out.println("此时运行的是ddl命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸ddl鍛戒护");
         String s ;
         Protocol protocol = new Protocol();
         if(setArgs.size()==0){

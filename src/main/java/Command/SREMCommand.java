@@ -25,10 +25,10 @@ public class SREMCommand implements Command{
     public void execute() {
         Protocol protocol = new Protocol();
         String s ;
-        System.out.println("此时运行的是srem命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸srem鍛戒护");
         if(setArgs.size()<2){
             s = protocol.encodeServer("", "401");
-       }else {
+        }else {
             HashMap<String, HashSet<String>> hms = HashsetMap.getSetMap();
             String key = setArgs.get(0);
             String member = setArgs.get(1);
@@ -40,7 +40,7 @@ public class SREMCommand implements Command{
                     HashsetMap.setHms(hms);
                     s = protocol.encodeServer("", "200");
                 }else{
-                    s = protocol.encodeServer("不包含该成员", "404");
+                    s = protocol.encodeServer("涓嶅寘鍚鎴愬憳", "404");
                 }
             }else{
                 s = protocol.encodeServer("", "501");

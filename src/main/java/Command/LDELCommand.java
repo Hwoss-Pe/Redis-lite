@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 public class LDELCommand implements Command {
-    //    删除的本质上设置key的value等于null
+    //    鍒犻櫎鐨勬湰璐ㄤ笂璁剧疆key鐨剉alue绛変簬null
     private List<String> setArgs;
     @Override
     public void setArgs(List<String> list) {
@@ -24,7 +24,7 @@ public class LDELCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("此时运行的是ldel命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸ldel鍛戒护");
         Protocol protocol = new Protocol();
         String s ;
         if(setArgs.size()<1){

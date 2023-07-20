@@ -27,7 +27,7 @@ public class LPUSHCommand implements Command{
     public void execute() {
         Protocol protocol = new Protocol();
         String s ;
-        System.out.println("此时运行的是lpush命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸lpush鍛戒护");
         if(setArgs.size()<=1) {
             s = protocol.encodeServer("", "401");
         }else {
@@ -45,6 +45,6 @@ public class LPUSHCommand implements Command{
             SLHashMap.setHml(hml);
             s = protocol.encodeServer("", "200");
         }
-            MultiWriteHandler.setClient(s);
+        MultiWriteHandler.setClient(s);
     }
 }

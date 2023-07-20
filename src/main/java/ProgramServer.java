@@ -1,8 +1,8 @@
 import log.LogPrint;
 
 public class ProgramServer {
-//   Ä£ÄâÒ»¸öÓ¦ÓÃ³ÌÐòÀ´µ÷ÓÃapi½øÐÐ²Ù×÷,µ÷ÓÃ·½·¨¾ÍÊÇÖ±½Ó´´½¨¶ÔÓ¦µÄÀà
-//    È»ºóÔÚÍ¨¹ý·½·¨µÄÐÎÊ½µ÷ÓÃ·þÎñÆ÷ºÍ¿Í»§¶Ë¿ªÆô
+    //   æ¨¡æ‹Ÿä¸€ä¸ªåº”ç”¨ç¨‹åºæ¥è°ƒç”¨apiè¿›è¡Œæ“ä½œ,è°ƒç”¨æ–¹æ³•å°±æ˜¯ç›´æŽ¥åˆ›å»ºå¯¹åº”çš„ç±»
+//    ç„¶åŽåœ¨é€šè¿‡æ–¹æ³•çš„å½¢å¼è°ƒç”¨æœåŠ¡å™¨å’Œå®¢æˆ·ç«¯å¼€å¯
     public static void main(String[] args) {
         SocketServer.run();
     }

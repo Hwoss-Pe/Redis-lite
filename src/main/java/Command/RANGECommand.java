@@ -23,7 +23,7 @@ public class RANGECommand implements Command{
 
     @Override
     public void execute() {
-        System.out.println("´ËÊ±ÔËĞĞµÄÊÇrangeÃüÁî");
+        System.out.println("æ­¤æ—¶è¿è¡Œçš„æ˜¯rangeå‘½ä»¤");
         Protocol protocol = new Protocol();
         String s ;
         if(setArgs.size()<=2) {
@@ -36,15 +36,15 @@ public class RANGECommand implements Command{
             int length = end - start;
             LinkedList<String> linkedList = hml.get(key);
             if (linkedList == null) {
-                s = protocol.encodeServer("Ã»ÓĞÁ´±í", "404");
+                s = protocol.encodeServer("æ²¡æœ‰é“¾è¡¨", "404");
             }
             if (start < 0 || end < 0 || length > linkedList.size() || length < 0 || end > linkedList.size() - 1) {
-                        s = protocol.encodeServer("·Ç·¨ÊäÈë£¬Ë÷Òı²»´æÔÚ»òÕßÔ½½ç", "404");
+                s = protocol.encodeServer("éæ³•è¾“å…¥ï¼Œç´¢å¼•ä¸å­˜åœ¨æˆ–è€…è¶Šç•Œ", "404");
             } else {
                 StringBuilder str = new StringBuilder();
                 for (int i = start; i <= end; i++) {
                     str.append(linkedList.get(i)).append(" ");
-                    //È¥»ñÈ¡¼¯ºÏµÄ¶ÔÓ¦Öµ£¬È»ºó°ÑĞèÒªÊä³öµÄ´æÈëĞÂ¼¯ºÏÖĞ½øĞĞ·µ»Ø
+                    //å»è·å–é›†åˆçš„å¯¹åº”å€¼ï¼Œç„¶åæŠŠéœ€è¦è¾“å‡ºçš„å­˜å…¥æ–°é›†åˆä¸­è¿›è¡Œè¿”å›
                 }
                 s = protocol.encodeServer(str.toString(), "200");
             }

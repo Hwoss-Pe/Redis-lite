@@ -15,10 +15,10 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 public class OutputCheck {
-    //   Õâ¸ö²»Í¬ÓÚinput£¬Êä³öÊÇÒ»ÆğÊä³ö³öÈ¥£¬°ó¶¨µÄ£»
+    //   è¿™ä¸ªä¸åŒäºinputï¼Œè¾“å‡ºæ˜¯ä¸€èµ·è¾“å‡ºå‡ºå»ï¼Œç»‘å®šçš„ï¼›
     public static void output()  {
         String persistenceMethod = "dataPersistence";
-//            Ä¬ÈÏ²ÉÓÃÊı¾İ³Ö¾Ã»¯
+//            é»˜è®¤é‡‡ç”¨æ•°æ®æŒä¹…åŒ–
         try {
             Properties properties = new Properties();
             FileInputStream fileInputStream = new FileInputStream("..\\Test444\\src\\main\\resources\\config.properties");
@@ -26,7 +26,7 @@ public class OutputCheck {
             persistenceMethod = properties.getProperty("persistenceMethod");
             fileInputStream.close();
         } catch (IOException e) {
-            LogPrint.logger.error("¶ÁÈëÅäÖÃÎÄ¼şÒì³£",e);
+            LogPrint.logger.error("è¯»å…¥é…ç½®æ–‡ä»¶å¼‚å¸¸",e);
         }
         if (persistenceMethod.equals("dataPersistence")) {
             HashMap<String, String> hm = SSHashMap.getSSHashMap();
@@ -48,9 +48,9 @@ public class OutputCheck {
             SLHashMap.output(hml);
             SHHashMap.output(hmh);
             HashsetMap.output(hms);
-            System.out.println("Á½ÖÖÈÕÖ¾Ò»Æğ");
+            System.out.println("ä¸¤ç§æ—¥å¿—ä¸€èµ·");
         }else{
-            MultiWriteHandler.setClient("ÅäÖÃÎÄ¼ş³Ö¾Ã»¯·½·¨³ö´í");
+            MultiWriteHandler.setClient("é…ç½®æ–‡ä»¶æŒä¹…åŒ–æ–¹æ³•å‡ºé”™");
         }
     }
 }

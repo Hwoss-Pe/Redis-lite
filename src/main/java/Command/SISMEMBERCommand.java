@@ -25,7 +25,7 @@ public class SISMEMBERCommand implements Command{
     public void execute() {
         Protocol protocol = new Protocol();
         String s ;
-        System.out.println("此时运行的是sismember命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸sismember鍛戒护");
         if(setArgs.size()<2){
             s = protocol.encodeServer("", "401");
         }else{
@@ -37,7 +37,7 @@ public class SISMEMBERCommand implements Command{
                 if(hs.contains(member)){
                     s = protocol.encodeServer("", "200");
                 }else{
-                    s = protocol.encodeServer("集合中没有该成员", "404");
+                    s = protocol.encodeServer("闆嗗悎涓病鏈夎鎴愬憳", "404");
                 }
             }else{
                 s = protocol.encodeServer("", "501");

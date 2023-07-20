@@ -15,30 +15,30 @@ public class SLHashMap {
             SLHashMapAddress= properties.property("SLHashMap");
             File file = new File(SLHashMapAddress);
             if (file.exists()) {
-                //µ¼Èë
+                //å¯¼å…¥
                 ObjectInputStream ois = null;
                 ois = new ObjectInputStream(new FileInputStream(file));
-                //´ÓÎÄ¼şÖĞ¶ÁÈ¡Êı¾İ
+                //ä»æ–‡ä»¶ä¸­è¯»å–æ•°æ®
                 hml = (HashMap<String, LinkedList<String>>) ois.readObject();
                 ois.close();
             }
         } catch (IOException e) {
-            LogPrint.logger.error("»ñÈ¡IOÁ÷´íÎó",e);
+            LogPrint.logger.error("è·å–IOæµé”™è¯¯",e);
         } catch (ClassNotFoundException e) {
-            LogPrint.logger.error("ÕÒ²»µ½ÎÄ¼şData2",e);
+            LogPrint.logger.error("æ‰¾ä¸åˆ°æ–‡ä»¶Data2",e);
         }
         return hml;
     }
 
-    //    ÕâÀï¾ÍĞ´Ò»¸öĞ´½øÈ¥ÎÄ¼şµÄ·½·¨£¬Àí½â³ÉÊÖ¶¯Ë¢ÅÌ
-// Ğ´ÈëÎÄ¼ş
+    //    è¿™é‡Œå°±å†™ä¸€ä¸ªå†™è¿›å»æ–‡ä»¶çš„æ–¹æ³•ï¼Œç†è§£æˆæ‰‹åŠ¨åˆ·ç›˜
+// å†™å…¥æ–‡ä»¶
     public static void output(HashMap<String, LinkedList<String>> hml)  {
         File file = new File(SLHashMapAddress);
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(SLHashMapAddress));
         } catch (IOException e) {
-            LogPrint.logger.error("ÎÄ¼şIOÁ÷³ö´í",e);
+            LogPrint.logger.error("æ–‡ä»¶IOæµå‡ºé”™",e);
         }
         if (file.exists()) {
             try {
@@ -47,23 +47,23 @@ public class SLHashMap {
                     oos.flush();
                 }
             } catch (IOException e) {
-                LogPrint.logger.error("Ğ´ÈëÎÄ¼şData2Ê§°Ü",e);
+                LogPrint.logger.error("å†™å…¥æ–‡ä»¶Data2å¤±è´¥",e);
             }
         } else {
             try {
                 boolean created = file.createNewFile();
                 if (created) {
-                    System.out.println("Data2ÎÄ¼ş´´½¨³É¹¦¡£");
+                    System.out.println("Data2æ–‡ä»¶åˆ›å»ºæˆåŠŸã€‚");
                     if (hml != null) {
                         oos.writeObject(hml);
                         oos.flush();
                         oos.close();
                     }
                 } else {
-                    System.out.println("Data2´´½¨ÎÄ¼şÊ§°Ü");
+                    System.out.println("Data2åˆ›å»ºæ–‡ä»¶å¤±è´¥");
                 }
             } catch (IOException e) {
-                LogPrint.logger.error("Data2´´½¨³öÏÖÒì³£",e);
+                LogPrint.logger.error("Data2åˆ›å»ºå‡ºç°å¼‚å¸¸",e);
             }
         }
     }

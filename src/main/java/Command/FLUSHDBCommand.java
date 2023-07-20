@@ -20,7 +20,7 @@ public class FLUSHDBCommand implements Command{
 
     @Override
     public void execute() {
-//    清空缓存就是重新读取然后覆盖类的数据，直接读回上一次的数据,这里也要进行清除日志
+//    娓呯┖缂撳瓨灏辨槸閲嶆柊璇诲彇鐒跺悗瑕嗙洊绫荤殑鏁版嵁锛岀洿鎺ヨ鍥炰笂涓�娆＄殑鏁版嵁,杩欓噷涔熻杩涜娓呴櫎鏃ュ織
         String s ;
         Protocol protocol = new Protocol();
         HashMap<String, String> hm = SSHashMap.input();
@@ -30,8 +30,8 @@ public class FLUSHDBCommand implements Command{
         SLHashMap.setHml(hml);
         SHHashMap.setHmh(hmh);
         AppendFile.clearLogFile();
-        s = protocol.encodeServer("清除缓存成功", "200");
+        s = protocol.encodeServer("娓呴櫎缂撳瓨鎴愬姛", "200");
         MultiWriteHandler.setClient(s);
-//                清空临时追加日志文件
+//                娓呯┖涓存椂杩藉姞鏃ュ織鏂囦欢
     }
 }

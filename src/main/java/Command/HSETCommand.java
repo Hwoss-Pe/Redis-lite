@@ -25,7 +25,7 @@ public class HSETCommand implements Command {
     public void execute() {
         String s ;
         Protocol protocol = new Protocol();
-        System.out.println("此时运行的是hset命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸hset鍛戒护");
         if(setArgs.size()<=2){
             s = protocol.encodeServer("", "401");
         }else {

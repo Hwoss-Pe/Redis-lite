@@ -8,7 +8,7 @@ import java.util.List;
 public class BGSAVECommand implements Command {
     @Override
     public void setArgs(List<String> list) {
-        // 该命令无需参数
+        // 璇ュ懡浠ゆ棤闇�鍙傛暟
     }
 
     @Override

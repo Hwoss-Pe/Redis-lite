@@ -22,7 +22,7 @@ public class LENCommand implements Command {
     public void execute() {
         Protocol protocol = new Protocol();
         String s ;
-        System.out.println("此时运行的是len命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸len鍛戒护");
         if (setArgs.size()==0){
             s = protocol.encodeServer("", "401");
         }else {
@@ -42,6 +42,6 @@ public class LENCommand implements Command {
                 s = protocol.encodeServer("", "501");
             }
         }
-            MultiWriteHandler.setClient(s);
+        MultiWriteHandler.setClient(s);
     }
 }

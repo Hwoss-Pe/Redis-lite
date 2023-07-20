@@ -7,7 +7,7 @@ import Protocolutils.Protocol;
 import java.util.HashMap;
 import java.util.List;
 public class HDELCommand implements Command {
-    //    删除的本质上设置key的value等于null
+    //    鍒犻櫎鐨勬湰璐ㄤ笂璁剧疆key鐨剉alue绛変簬null
     private List<String> setArgs;
     @Override
     public void setArgs(List<String> list) {
@@ -23,7 +23,7 @@ public class HDELCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("此时运行的是del命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸hdel鍛戒护");
         HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
         Protocol protocol = new Protocol();
         String s ;
@@ -31,9 +31,9 @@ public class HDELCommand implements Command {
             s =  protocol.encodeServer("", "401");
             return;
         }
-         else if(setArgs.size()==1){
+        else if(setArgs.size()==1){
             String key = setArgs.get(0);
-//            删除的是整个哈希
+//            鍒犻櫎鐨勬槸鏁翠釜鍝堝笇
             HashMap<String, String> hm = hmh.get(key);
             if(hm==null){
                 s =  protocol.encodeServer("", "501");
@@ -43,15 +43,15 @@ public class HDELCommand implements Command {
             }
 
         }
-         else if(setArgs.size()==2){
+        else if(setArgs.size()==2){
             String key1 = setArgs.get(0);
             String key2 = setArgs.get(1);
-//             删除的是哈希里面的value
+//             鍒犻櫎鐨勬槸鍝堝笇閲岄潰鐨剉alue
             HashMap<String, String> hm = hmh.get(key1);
             hm.put(key2,null);
         }
         s =  protocol.encodeServer("", "200");
-         MultiWriteHandler.setClient(s);
+        MultiWriteHandler.setClient(s);
         SHHashMap.setHmh(hmh);
     }
 }

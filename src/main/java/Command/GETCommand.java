@@ -22,11 +22,11 @@ public class GETCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("此时运行的是get命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸get鍛戒护");
         Protocol protocol = new Protocol();
         String s ;
         if(setArgs.size()<1){
-           s =  protocol.encodeServer("", "401");
+            s =  protocol.encodeServer("", "401");
         }else{
             String key = setArgs.get(0);
             HashMap<String, String> hm = SSHashMap.getSSHashMap();

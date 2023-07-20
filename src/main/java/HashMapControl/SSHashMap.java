@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.HashMap;
 
 public class SSHashMap {
-//    static String HashMapAddress = "..\\Test444\\Datas1.bin";
+    //    static String HashMapAddress = "..\\Test444\\Datas1.bin";
     static String HashMapAddress;
     static  HashMap<String, String> hm = new HashMap<>();
 
@@ -16,32 +16,32 @@ public class SSHashMap {
             HashMapAddress= properties.property("SSHashMap");
             File file = new File(HashMapAddress);
             if (file.exists()) {
-                //µ¼Èë
+                //å¯¼å…¥
                 ObjectInputStream ois = null;
                 ois = new ObjectInputStream(new FileInputStream(file));
-                //´ÓÎÄ¼şÖĞ¶ÁÈ¡Êı¾İ
+                //ä»æ–‡ä»¶ä¸­è¯»å–æ•°æ®
                 hm = (HashMap<String, String>) ois.readObject();
                 ois.close();
             }
         } catch (IOException e) {
-            LogPrint.logger.error("ÎÄ¼şIOÁ÷³ö´í",e);
+            LogPrint.logger.error("æ–‡ä»¶IOæµå‡ºé”™",e);
         } catch (ClassNotFoundException e) {
-            LogPrint.logger.error("ÕÒ²»µ½ÎÄ¼şData1",e);
+            LogPrint.logger.error("æ‰¾ä¸åˆ°æ–‡ä»¶Data1",e);
         }
         return hm;
     }
 
 
 
-    //    ÕâÀï¾ÍĞ´Ò»¸öĞ´½øÈ¥ÎÄ¼şµÄ·½·¨£¬Àí½â³ÉÊÖ¶¯Ë¢ÅÌ
-// Ğ´ÈëÎÄ¼ş
+    //    è¿™é‡Œå°±å†™ä¸€ä¸ªå†™è¿›å»æ–‡ä»¶çš„æ–¹æ³•ï¼Œç†è§£æˆæ‰‹åŠ¨åˆ·ç›˜
+// å†™å…¥æ–‡ä»¶
     public static void output(HashMap<String, String> hm)  {
         File file = new File(HashMapAddress);
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(HashMapAddress));
         } catch (IOException e) {
-            LogPrint.logger.error("ÎÄ¼şIOÁ÷³öÏÖÎÊÌâ",e);
+            LogPrint.logger.error("æ–‡ä»¶IOæµå‡ºç°é—®é¢˜",e);
         }
         if (file.exists()) {
             try {
@@ -50,32 +50,32 @@ public class SSHashMap {
                     oos.flush();
                 }
             } catch (IOException e) {
-                LogPrint.logger.error("Ğ´ÈëÎÄ¼şData1Ê§°Ü",e);
+                LogPrint.logger.error("å†™å…¥æ–‡ä»¶Data1å¤±è´¥",e);
             }
         } else {
-                try {
-                    boolean created = file.createNewFile();
-                    if (created) {
-                        System.out.println("DataÎÄ¼ş´´½¨³É¹¦¡£");
-                        if (hm != null) {
-                            oos.writeObject(hm);
-                            oos.flush();
-                            oos.close();
-                        }
-                    } else {
-                        System.out.println("Data´´½¨ÎÄ¼şÊ§°Ü");
+            try {
+                boolean created = file.createNewFile();
+                if (created) {
+                    System.out.println("Dataæ–‡ä»¶åˆ›å»ºæˆåŠŸã€‚");
+                    if (hm != null) {
+                        oos.writeObject(hm);
+                        oos.flush();
+                        oos.close();
                     }
-                } catch (IOException e) {
-                    LogPrint.logger.error("´´½¨ÎÄ¼şData³öÏÖÒì³£",e);
+                } else {
+                    System.out.println("Dataåˆ›å»ºæ–‡ä»¶å¤±è´¥");
                 }
+            } catch (IOException e) {
+                LogPrint.logger.error("åˆ›å»ºæ–‡ä»¶Dataå‡ºç°å¼‚å¸¸",e);
             }
+        }
 
-        }
-        public static HashMap<String,String> getSSHashMap(){
-                return hm;
-        }
-        public static void setHm(HashMap<String,String> ssHashMap) {
-                hm = ssHashMap;
-        }
     }
+    public static HashMap<String,String> getSSHashMap(){
+        return hm;
+    }
+    public static void setHm(HashMap<String,String> ssHashMap) {
+        hm = ssHashMap;
+    }
+}
 

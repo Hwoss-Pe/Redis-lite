@@ -15,29 +15,29 @@ public class HashsetMap {
             SetMap= properties.property("HashsetMap");
             File file = new File(SetMap);
             if (file.exists()) {
-                //µ¼Èë
+                //å¯¼å…¥
                 ObjectInputStream ois = null;
                 ois = new ObjectInputStream(new FileInputStream(file));
-                //´ÓÎÄ¼şÖĞ¶ÁÈ¡Êı¾İ
+                //ä»æ–‡ä»¶ä¸­è¯»å–æ•°æ®
                 hms = (HashMap<String, HashSet<String>>) ois.readObject();
                 ois.close();
             }
         } catch (IOException e) {
-            LogPrint.logger.error("¶ÁÈëÊ§°Ü",e);
+            LogPrint.logger.error("è¯»å…¥å¤±è´¥",e);
         } catch (ClassNotFoundException e) {
-            LogPrint.logger.error("ÕÒ²»µ½Ààproperty",e);
+            LogPrint.logger.error("æ‰¾ä¸åˆ°ç±»property",e);
         }
         return hms;
     }
 
-// Ğ´ÈëÎÄ¼ş
+    // å†™å…¥æ–‡ä»¶
     public static void output(HashMap<String, HashSet<String>> hms)  {
         File file = new File(SetMap);
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(SetMap));
         } catch (IOException e) {
-            LogPrint.logger.error("»ñÈ¡ÎÄ¼şÁ÷Ê§°Ü",e);
+            LogPrint.logger.error("è·å–æ–‡ä»¶æµå¤±è´¥",e);
         }
         if (file.exists()) {
             if (hms != null) {
@@ -45,24 +45,24 @@ public class HashsetMap {
                     oos.writeObject(hms);
                     oos.flush();
                 } catch (IOException e) {
-                    LogPrint.logger.error("¶ÁÈëÊ§°Ü",e);
+                    LogPrint.logger.error("è¯»å…¥å¤±è´¥",e);
                 }
             }
         } else {
             try {
                 boolean created = file.createNewFile();
                 if (created) {
-                    System.out.println("Data4ÎÄ¼ş´´½¨³É¹¦¡£");
+                    System.out.println("Data4æ–‡ä»¶åˆ›å»ºæˆåŠŸã€‚");
                     if (hms != null) {
                         oos.writeObject(hms);
                         oos.flush();
                         oos.close();
                     }
                 } else {
-                    System.out.println("Data4´´½¨ÎÄ¼şÊ§°Ü");
+                    System.out.println("Data4åˆ›å»ºæ–‡ä»¶å¤±è´¥");
                 }
             } catch (IOException e) {
-                LogPrint.logger.error("¶ÁÈëÎÄ¼şData4Òì³£",e);
+                LogPrint.logger.error("è¯»å…¥æ–‡ä»¶Data4å¼‚å¸¸",e);
             }
         }
     }

@@ -6,42 +6,42 @@ import java.util.HashMap;
 
 public class Protocol {
 
-   static HashMap<Integer,String > hm = new HashMap<>();
-   static{
-        hm.put(501,"keyÕÒ²»µ½");
+    static HashMap<Integer,String > hm = new HashMap<>();
+    static{
+        hm.put(501,"keyæ‰¾ä¸åˆ°");
         hm.put(200,"OK");
-        hm.put(502,"valueÕÒ²»µ½");
-        hm.put(505,"·şÎñÆ÷³öÏÖÒì³£");
-        hm.put(404,"¿Í»§¶Ë³öÏÖÒì³£");
-        hm.put(401,"ÇëÇó²ÎÊıÓĞÎó");
+        hm.put(502,"valueæ‰¾ä¸åˆ°");
+        hm.put(505,"æœåŠ¡å™¨å‡ºç°å¼‚å¸¸");
+        hm.put(404,"å®¢æˆ·ç«¯å‡ºç°å¼‚å¸¸");
+        hm.put(401,"è¯·æ±‚å‚æ•°æœ‰è¯¯");
     }
-    //    protocolĞ­ÒéµÄ¾ßÌå£º
+    //    protocolåè®®çš„å…·ä½“ï¼š
 //    message             code
-//    ÇëÇó³É¹¦¾Í·µ»ØÊı¾İ     ×´Ì¬Âë200
-//    keyÕÒ²»µ½            ×´Ì¬Âë501
-//    valueÕÒ²»µ½          ×´Ì¬Âë502
-//    ·şÎñÆ÷³öÏÖÒì³£        ×´Ì¬Âë505
-//    ¿Í»§¶Ë³öÏÖÒì³£        ×´Ì¬Âë404
-//    ÇëÇó²ÎÊıÓĞÎó          ×´Ì¬Âë401
+//    è¯·æ±‚æˆåŠŸå°±è¿”å›æ•°æ®     çŠ¶æ€ç 200
+//    keyæ‰¾ä¸åˆ°            çŠ¶æ€ç 501
+//    valueæ‰¾ä¸åˆ°          çŠ¶æ€ç 502
+//    æœåŠ¡å™¨å‡ºç°å¼‚å¸¸        çŠ¶æ€ç 505
+//    å®¢æˆ·ç«¯å‡ºç°å¼‚å¸¸        çŠ¶æ€ç 404
+//    è¯·æ±‚å‚æ•°æœ‰è¯¯          çŠ¶æ€ç 401
 
 
 
 
-//    ÇëÇó±¨ÎÄ,¿Í»§¶Ë¼ÓÃÜµÄ¸ñÊ½
+//    è¯·æ±‚æŠ¥æ–‡,å®¢æˆ·ç«¯åŠ å¯†çš„æ ¼å¼
 //    get /users protocol
 //    Content-type: text/string
-//    Accept-Language £ºen
+//    Accept-Language ï¼šen
 //    data
 //
 //
-//    ÏìÓ¦±¨ÎÄ£¬·şÎñ¶Ë¼ÓÃÜµÄ¸ñÊ½
+//    å“åº”æŠ¥æ–‡ï¼ŒæœåŠ¡ç«¯åŠ å¯†çš„æ ¼å¼
 //    protocol  200
 //    Content-type: text/string
 //    Content-length:19
 //    message
 
 
-    //¿Í»§¶ËÊı¾İ×ª»»³ÉÇëÇó±¨ÎÄµÄ·½·¨
+    //å®¢æˆ·ç«¯æ•°æ®è½¬æ¢æˆè¯·æ±‚æŠ¥æ–‡çš„æ–¹æ³•
     public  String encodeClient(String data)
     {
         String request = "get /users protocol\n" +
@@ -49,34 +49,34 @@ public class Protocol {
                 "Accept-Language:en\n"+
                 "data:";
         return  request+data;
-}
-//    ·şÎñ¶ËÇëÇó±¨ÎÄ×ª»»³ÉÊı¾İµÄ·½·¨
+    }
+    //    æœåŠ¡ç«¯è¯·æ±‚æŠ¥æ–‡è½¬æ¢æˆæ•°æ®çš„æ–¹æ³•
     public  String decodeServer(String request){
         String[] split = request.split("data:");
         String data = null;
         try {
             data = split[1];
         } catch (Exception e) {
-            LogPrint.logger.error("Ğ­Òé³öÏÖ½âÎö´íÎó");
+            LogPrint.logger.error("åè®®å‡ºç°è§£æé”™è¯¯");
         }
         return data;
     }
-//·şÎñ¶ËÊı¾İ×ª»»ÏìÓ¦±¨ÎÄµÄ·½·¨
+    //æœåŠ¡ç«¯æ•°æ®è½¬æ¢å“åº”æŠ¥æ–‡çš„æ–¹æ³•
     public  String encodeServer(String data, String codeStr){
         int code = Integer.parseInt(codeStr);
         String message = hm.get(code);
         if(message == null) {
-            message = "Î´´¦ÀíµÄ×´Ì¬Âë";
+            message = "æœªå¤„ç†çš„çŠ¶æ€ç ";
         }
         String dataLength = "0";
         if(data!=null){
-           dataLength = data.length()+"";
+            dataLength = data.length()+"";
         }
         String reply = "protocol "+codeStr+" \n"+"Content-type:text/string\n" +
                 "Content-length:"+dataLength+'\n'+"message:"+message+"data:"+data;
         return reply;
     }
-//    //¿Í»§¶Ë´¦ÀíÏìÓ¦±¨ÎÄµÄ·½·¨
+    //    //å®¢æˆ·ç«¯å¤„ç†å“åº”æŠ¥æ–‡çš„æ–¹æ³•
     public  String decodeClient(String reply) {
         String codeStr = "";
         String message = "";
@@ -87,13 +87,13 @@ public class Protocol {
             data = reply.split("data:")[1];
 
         } catch (Exception e) {
-            LogPrint.logger.error("Ğ­Òé³öÏÖ½âÎö´íÎó");
+            LogPrint.logger.error("åè®®å‡ºç°è§£æé”™è¯¯");
         }
         if(!data.equals("")) {
             data = "\n"+data;
         }
         if(codeStr.equals("")&&data.equals("")&&message.equals("")){
-            return "ÃüÁî¶ÁÈ¡Ê§°Ü£¬¿Í»§¶ËÊÕµ½´ËĞÅÏ¢";
+            return "å‘½ä»¤è¯»å–å¤±è´¥ï¼Œå®¢æˆ·ç«¯æ”¶åˆ°æ­¤ä¿¡æ¯";
         }
         return codeStr+" "+message+" "+data;
     }

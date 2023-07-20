@@ -1,5 +1,5 @@
 import Command.SAVECommand;
-import Io.InputCheck2;
+import Io.InputCheck;
 import Io.MultiWriteHandler;
 import Command.CommandExtract;
 import Protocolutils.Protocol;
@@ -20,23 +20,23 @@ class SubReactor {
 
     public SubReactor()  {
 
-        InputCheck2.input();
+        InputCheck.input();
         try {
             selector = SelectorProvider.provider().openSelector();
             stop = false;
         } catch (IOException e) {
-            LogPrint.logger.error("´´½¨×Óreactor³öÏÖÒì³£",e);
+            LogPrint.logger.error("åˆ›å»ºå­reactorå‡ºç°å¼‚å¸¸",e);
             System.exit(1);
         }
     }
 
 
-//     ½«Ö÷ReactorÖĞµÄChannel×¢²áµ½´ÓReactorÖĞµÄselector
+//     å°†ä¸»Reactorä¸­çš„Channelæ³¨å†Œåˆ°ä»Reactorä¸­çš„selector
     public void register(SocketChannel sc) {
         try {
             sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         } catch (ClosedChannelException e) {
-            LogPrint.logger.error("×¢²áselector³öÏÖÒì³£",e);
+            LogPrint.logger.error("æ³¨å†Œselectorå‡ºç°å¼‚å¸¸",e);
         }
     }
 
@@ -45,8 +45,8 @@ class SubReactor {
         executorService.submit(new Runnable() {
             @Override
             public void run() {
-                System.out.println("´Óreactor¿ªÊ¼Æô¶¯ÁË¡£¡£¡£¡£¡£");
-                System.out.println("´ÓreactorÏß³Ì:" + Thread.currentThread().getName());
+                System.out.println("ä»reactorå¼€å§‹å¯åŠ¨äº†ã€‚ã€‚ã€‚ã€‚ã€‚");
+                System.out.println("ä»reactorçº¿ç¨‹:" + Thread.currentThread().getName());
                 System.out.println("-----------------------------------------------------------");
 
                 while (!stop) {
@@ -69,7 +69,7 @@ class SubReactor {
                             }
                         }
                     } catch (Throwable t) {
-                        LogPrint.logger.error("reactor³öÏÖÒì³£",t);
+                        LogPrint.logger.error("reactorå‡ºç°å¼‚å¸¸",t);
                     }
                 }
             }
@@ -78,11 +78,11 @@ class SubReactor {
     }
 
     private void disPatch(SelectionKey key) {
-//        ´ÓReactorÖ»¹ØĞÄ¶ÁºÍĞ´ÊÂ¼ş
+//        ä»Reactoråªå…³å¿ƒè¯»å’Œå†™äº‹ä»¶
 
         if (key.isValid()) {
             if (key.isReadable()) {
-                //´¦Àí¶Á (×¨ÃÅĞ´·½·¨..)
+                //å¤„ç†è¯» (ä¸“é—¨å†™æ–¹æ³•..)
                 readData(key);
             }
             if (key.isWritable()) {
@@ -91,19 +91,19 @@ class SubReactor {
         }
     }
 
-    //¶ÁÈ¡¿Í»§¶ËÏûÏ¢
+    //è¯»å–å®¢æˆ·ç«¯æ¶ˆæ¯
     private void readData(SelectionKey key) {
         SocketChannel channel = null;
 
         try {
-            //È¡µ½¹ØÁªµÄchannel
-            //µÃµ½channel
+            //å–åˆ°å…³è”çš„channel
+            //å¾—åˆ°channel
             channel = (SocketChannel) key.channel();
-            //´´½¨buffer
+            //åˆ›å»ºbuffer
             ByteBuffer buffer = ByteBuffer.allocate(1024);
 
             int count = channel.read(buffer);
-            //°Ñ»º´æÇøµÄÊı¾İ×ª³É×Ö·û´®
+            //æŠŠç¼“å­˜åŒºçš„æ•°æ®è½¬æˆå­—ç¬¦ä¸²
             String msg = new String(buffer.array()).replaceAll("\u0000", "");
             Protocol protocol = new Protocol();
             msg= protocol.decodeServer(msg);
@@ -111,60 +111,58 @@ class SubReactor {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("ÒµÎñÂß¼­´¦ÀíÏß³Ì: " + Thread.currentThread().getName());
-                    //¸ù¾İcountµÄÖµ×ö´¦Àí
+                    System.out.println("ä¸šåŠ¡é€»è¾‘å¤„ç†çº¿ç¨‹: " + Thread.currentThread().getName());
+                    //æ ¹æ®countçš„å€¼åšå¤„ç†
                     if (count > 0) {
-                        //Êä³ö¸ÃÏûÏ¢
-                        System.out.println("´Ó¿Í»§¶ËÊÕµ½: " + finalMsg);
+                        //è¾“å‡ºè¯¥æ¶ˆæ¯
+                        System.out.println("ä»å®¢æˆ·ç«¯æ”¶åˆ°: " + finalMsg);
                         CommandExtract commandExtract   = new CommandExtract();
                        commandExtract.Extract(finalMsg);
                         System.out.println("-----------------------------------------------------------");
                     }
                 }
             });
-            //ÏòÆäËüµÄ¿Í»§¶Ë×ª·¢ÏûÏ¢(È¥µô×Ô¼º), ×¨ÃÅĞ´Ò»¸ö·½·¨À´´¦Àí
+            //å‘å…¶å®ƒçš„å®¢æˆ·ç«¯è½¬å‘æ¶ˆæ¯(å»æ‰è‡ªå·±), ä¸“é—¨å†™ä¸€ä¸ªæ–¹æ³•æ¥å¤„ç†
             sendInfoToOtherClients(msg, channel);
         } catch (Exception e) {
             try {
                 assert channel != null;
-                System.out.println(channel.getRemoteAddress() + " ÀëÏßÁË..");
+                System.out.println(channel.getRemoteAddress() + " ç¦»çº¿äº†..");
 
-//                ÀëÏßºó×Ô¶¯½øĞĞ±£´æ£¬ÊÇ¿Í»§¶ËÍË³öµÄÊ±ºò·şÎñÆ÷¼ì²âÈ»ºó½øĞĞ±£´æ£¬ÔÚ¿Í»§¶ËÒ²Ğ´ÁËÒ»´Î±£Ö¤³É¹¦
+//                ç¦»çº¿åè‡ªåŠ¨è¿›è¡Œä¿å­˜ï¼Œæ˜¯å®¢æˆ·ç«¯é€€å‡ºçš„æ—¶å€™æœåŠ¡å™¨æ£€æµ‹ç„¶åè¿›è¡Œä¿å­˜ï¼Œåœ¨å®¢æˆ·ç«¯ä¹Ÿå†™äº†ä¸€æ¬¡ä¿è¯æˆåŠŸ
                 SAVECommand saveCommand = new SAVECommand();
                 saveCommand.execute();
 
-
-
-                //È¡Ïû×¢²á
+                //å–æ¶ˆæ³¨å†Œ
                 key.cancel();
-                //¹Ø±ÕÍ¨µÀ
+                //å…³é—­é€šé“
                 channel.close();
             } catch (IOException e2) {
-                LogPrint.logger.error("¹Ø±ÕÍ¨µÀ³öÏÖÒì³£",e);
+                LogPrint.logger.error("å…³é—­é€šé“å‡ºç°å¼‚å¸¸",e);
             }
         }
     }
 
-    //×ª·¢ÏûÏ¢¸øÆäËü¿Í»§(Í¨µÀ)
+    //è½¬å‘æ¶ˆæ¯ç»™å…¶å®ƒå®¢æˆ·(é€šé“)
     private void sendInfoToOtherClients(String msg, SocketChannel self)  {
-        System.out.println("·şÎñÆ÷×ª·¢Êı¾İ¸ø¿Í»§¶ËÏß³Ì: " + Thread.currentThread().getName());
+        System.out.println("æœåŠ¡å™¨è½¬å‘æ•°æ®ç»™å®¢æˆ·ç«¯çº¿ç¨‹: " + Thread.currentThread().getName());
 
-        //±éÀú ËùÓĞ×¢²áµ½selector ÉÏµÄ SocketChannel,²¢ÅÅ³ı self
+        //éå† æ‰€æœ‰æ³¨å†Œåˆ°selector ä¸Šçš„ SocketChannel,å¹¶æ’é™¤ self
         for (SelectionKey key : selector.keys()) {
-            //Í¨¹ı key  È¡³ö¶ÔÓ¦µÄ SocketChannel
+            //é€šè¿‡ key  å–å‡ºå¯¹åº”çš„ SocketChannel
             Channel targetChannel = key.channel();
 
-            //ÅÅ³ı×Ô¼º
+            //æ’é™¤è‡ªå·±
             if (targetChannel instanceof SocketChannel && targetChannel != self) {
-                //×ªĞÍ
+                //è½¬å‹
                 SocketChannel dest = (SocketChannel) targetChannel;
-                //½«msg ´æ´¢µ½buffer
+                //å°†msg å­˜å‚¨åˆ°buffer
                 ByteBuffer buffer = ByteBuffer.wrap(msg.getBytes());
-                //½«buffer µÄÊı¾İĞ´Èë Í¨µÀ
+                //å°†buffer çš„æ•°æ®å†™å…¥ é€šé“
                 try {
                     dest.write(buffer);
                 } catch (IOException e) {
-                    LogPrint.logger.error("½«bufferµÄÊı¾İĞ´ÈëÍ¨µÀ³öÏÖÒì³£",e);
+                    LogPrint.logger.error("å°†bufferçš„æ•°æ®å†™å…¥é€šé“å‡ºç°å¼‚å¸¸",e);
                 }
             }
         }

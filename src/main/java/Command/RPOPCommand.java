@@ -27,7 +27,7 @@ public class RPOPCommand implements Command{
     public void execute() {
         Protocol protocol = new Protocol();
         String s ;
-        System.out.println("此时运行的是rpop命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸rpop鍛戒护");
         if(setArgs.size()<1) {
             s = protocol.encodeServer("", "401");
         }else {
@@ -35,7 +35,7 @@ public class RPOPCommand implements Command{
             String key = setArgs.get(0);
             LinkedList<String> linkedList = hml.get(key);
             if(linkedList==null||linkedList.size()==0){
-                s = protocol.encodeServer("key错误或者该集合为空", "404");
+                s = protocol.encodeServer("key閿欒鎴栬�呰闆嗗悎涓虹┖", "404");
             }else{
                 String removing = linkedList.removeLast();
                 hml.put(key,linkedList);

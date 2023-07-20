@@ -1,12 +1,12 @@
 package Command;
-        import Io.MultiWriteHandler;
-        import HashMapControl.SSHashMap;
-        import Protocolutils.Protocol;
+import Io.MultiWriteHandler;
+import HashMapControl.SSHashMap;
+import Protocolutils.Protocol;
 
-        import java.util.HashMap;
-        import java.util.List;
+import java.util.HashMap;
+import java.util.List;
 public class DELCommand implements Command {
-    //    删除的本质上设置key的value等于null
+    //    鍒犻櫎鐨勬湰璐ㄤ笂璁剧疆key鐨剉alue绛変簬null
     private List<String> setArgs;
     @Override
     public void setArgs(List<String> list) {
@@ -22,12 +22,12 @@ public class DELCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("此时运行的是del命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸del鍛戒护");
         String s ;
         String value;
         Protocol protocol = new Protocol();
         if(setArgs.size()<1){
-             s = protocol.encodeServer("", "401");
+            s = protocol.encodeServer("", "401");
         }else {
             String key = setArgs.get(0);
             HashMap<String, String> hm = SSHashMap.getSSHashMap();

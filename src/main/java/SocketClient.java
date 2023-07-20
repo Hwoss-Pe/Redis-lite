@@ -13,14 +13,14 @@ import java.util.Scanner;
 
 
 public class SocketClient {
-    //¶¨ÒåÏà¹ØµÄÊôĞÔ
-    private static  String HOST ; // ·şÎñÆ÷µÄip
-    private static   int PORT ; //·şÎñÆ÷¶Ë¿Ú
+    //å®šä¹‰ç›¸å…³çš„å±æ€§
+    private static  String HOST ; // æœåŠ¡å™¨çš„ip
+    private static   int PORT ; //æœåŠ¡å™¨ç«¯å£
     private Selector selector;
     private SocketChannel socketChannel;
     private String username;
 
-    //¹¹ÔìÆ÷, Íê³É³õÊ¼»¯¹¤×÷
+    //æ„é€ å™¨, å®Œæˆåˆå§‹åŒ–å·¥ä½œ
     public SocketClient()  {
         HOST = properties.property("HOST");
         String PORTStr = properties.property("PORT");
@@ -28,51 +28,51 @@ public class SocketClient {
 
         try {
             selector = Selector.open();
-            //Á¬½Ó·şÎñÆ÷
+            //è¿æ¥æœåŠ¡å™¨
             socketChannel = SocketChannel.open(new InetSocketAddress(HOST, PORT));
-            //ÉèÖÃ·Ç×èÈû
+            //è®¾ç½®éé˜»å¡
             socketChannel.configureBlocking(false);
-            //½«channel ×¢²áµ½selector
+            //å°†channel æ³¨å†Œåˆ°selector
             socketChannel.register(selector, SelectionKey.OP_READ);
-            //µÃµ½username
+            //å¾—åˆ°username
             username = socketChannel.getLocalAddress().toString().substring(1);
         } catch (IOException e) {
-            LogPrint.logger.error("SocketChannel´´½¨³öÏÖÒì³£»òÕßIO³ö´í",e);
+            LogPrint.logger.error("SocketChannelåˆ›å»ºå‡ºç°å¼‚å¸¸æˆ–è€…IOå‡ºé”™",e);
         }
         System.out.println(username + ">");
     }
 
-    //Ïò·şÎñÆ÷·¢ËÍÏûÏ¢
+    //å‘æœåŠ¡å™¨å‘é€æ¶ˆæ¯
     public void sendInfo(String info) {
 
-        info = username + " Ëµ£º" + info;
-//        Ğ´ÈëÇ°°ü×°Ò»ÏÂ£¬ÕâÀï¾ÍÒªĞ´Ò»¸öÍ¨¹ıĞ­ÒéµÄ·½·¨
+        info = username + " è¯´ï¼š" + info;
+//        å†™å…¥å‰åŒ…è£…ä¸€ä¸‹ï¼Œè¿™é‡Œå°±è¦å†™ä¸€ä¸ªé€šè¿‡åè®®çš„æ–¹æ³•
         Protocol protocol = new Protocol();
         info = protocol.encodeClient(info);
         try {
             socketChannel.write(ByteBuffer.wrap(info.getBytes()));
         }catch (IOException e) {
-            LogPrint.logger.error("SocketChannelÍ¨µÀ³öÏÖÒì³£",e);
+            LogPrint.logger.error("SocketChannelé€šé“å‡ºç°å¼‚å¸¸",e);
         }
     }
 
-//    ¶ÁÈ¡´Ó·şÎñÆ÷¶Ë»Ø¸´µÄÏûÏ¢
+//    è¯»å–ä»æœåŠ¡å™¨ç«¯å›å¤çš„æ¶ˆæ¯
     public void readInfo() {
         try {
             int readChannels = selector.select();
-            if(readChannels > 0) {//ÓĞ¿ÉÒÔÓÃµÄÍ¨µÀ
+            if(readChannels > 0) {//æœ‰å¯ä»¥ç”¨çš„é€šé“
                 Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
                 while (iterator.hasNext()) {
 
                     SelectionKey key = iterator.next();
                     if(key.isReadable()) {
-                        //µÃµ½Ïà¹ØµÄÍ¨µÀ
+                        //å¾—åˆ°ç›¸å…³çš„é€šé“
                         SocketChannel sc = (SocketChannel) key.channel();
-                        //µÃµ½Ò»¸öBuffer
+                        //å¾—åˆ°ä¸€ä¸ªBuffer
                         ByteBuffer buffer = ByteBuffer.allocate(1024);
-                        //¶ÁÈ¡
+                        //è¯»å–
                         sc.read(buffer);
-                        //°Ñ¶Áµ½µÄ»º³åÇøµÄÊı¾İ×ª³É×Ö·û´®
+                        //æŠŠè¯»åˆ°çš„ç¼“å†²åŒºçš„æ•°æ®è½¬æˆå­—ç¬¦ä¸²
                         String msg = new String(buffer.array());
                         Protocol protocol = new Protocol();
                          msg = protocol.decodeClient(msg);
@@ -80,9 +80,9 @@ public class SocketClient {
                         System.out.println(msg);
                     }
                 }
-                iterator.remove(); //É¾³ıµ±Ç°µÄselectionKey, ·ÀÖ¹ÖØ¸´²Ù×÷
+                iterator.remove(); //åˆ é™¤å½“å‰çš„selectionKey, é˜²æ­¢é‡å¤æ“ä½œ
             } else {
-                System.out.println("Ã»ÓĞ¿ÉÒÔÓÃµÄÍ¨µÀ...");
+                System.out.println("æ²¡æœ‰å¯ä»¥ç”¨çš„é€šé“...");
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +92,7 @@ public class SocketClient {
 
     public static void run()  {
 
-        //Æô¶¯ÎÒÃÇ¿Í»§¶Ë
+        //å¯åŠ¨æˆ‘ä»¬å®¢æˆ·ç«¯
         SocketClient chatClient = new SocketClient();
 
 
@@ -100,9 +100,9 @@ public class SocketClient {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             SAVECommand saveCommand = new SAVECommand();
             saveCommand.execute();
-//           Õâ¸öÊµÏÖÖ»ÄÜÓÃÔÚµ÷ÊÔ£¬µ½ÏÖÔÚÃ»¿´¶®£¬Ò²¿ÉÄÜÊÇÎÒµÄÉè¼ÆµÄÍ¨µÀÄ£Ê½ÊÇµÈ´ı¶Ï¿ªµ¼ÖÂ³ÌĞòÊÇÒì³£ÍË³öËùÒÔÃ»·¨¹Ø±Õ¹³×ÓÔËĞĞ
-//            Òò´ËÔÚÊÇ·şÎñ¶Ë½øĞĞ¼àÌı£¬Èç¹ûÊ§È¥Á¬½Ó¾ÍÊµÏÖ±£´æ
-//            Èç¹ûÏë¼ì²âÊÖ¶¯±£´æµÄ¹¦ÄÜ½«Õâ¶Î´úÂëºÍ·şÎñÆ÷ÀïÃæµÄÒ»Æğ×¢ÊÍÔÚSubReactorÀïÃæ
+//           è¿™ä¸ªå®ç°åªèƒ½ç”¨åœ¨è°ƒè¯•ï¼Œåˆ°ç°åœ¨æ²¡çœ‹æ‡‚ï¼Œä¹Ÿå¯èƒ½æ˜¯æˆ‘çš„è®¾è®¡çš„é€šé“æ¨¡å¼æ˜¯ç­‰å¾…æ–­å¼€å¯¼è‡´ç¨‹åºæ˜¯å¼‚å¸¸é€€å‡ºæ‰€ä»¥æ²¡æ³•å…³é—­é’©å­è¿è¡Œ
+//            å› æ­¤åœ¨æ˜¯æœåŠ¡ç«¯è¿›è¡Œç›‘å¬ï¼Œå¦‚æœå¤±å»è¿æ¥å°±å®ç°ä¿å­˜
+//            å¦‚æœæƒ³æ£€æµ‹æ‰‹åŠ¨ä¿å­˜çš„åŠŸèƒ½å°†è¿™æ®µä»£ç å’ŒæœåŠ¡å™¨é‡Œé¢çš„ä¸€èµ·æ³¨é‡Šåœ¨SubReactoré‡Œé¢
         }));
         new Thread(() -> {
             while (true) {
@@ -110,7 +110,7 @@ public class SocketClient {
                 try {
                     Thread.sleep(1000);
                 }catch (InterruptedException e) {
-                    LogPrint.logger.error("Ïß³Ì²¢·¢Òì³£",e);
+                    LogPrint.logger.error("çº¿ç¨‹å¹¶å‘å¼‚å¸¸",e);
                 }
             }
         }).start();

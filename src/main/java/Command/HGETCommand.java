@@ -27,7 +27,7 @@ public class HGETCommand implements Command {
         String s ;
         String key1 = setArgs.get(0);
         String key2 = setArgs.get(1);
-        System.out.println("此时运行的是hget命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸hget鍛戒护");
         if(setArgs.size()<=1){
             s = protocol.encodeServer("", "401");
 

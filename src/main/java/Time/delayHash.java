@@ -15,7 +15,7 @@ public class delayHash {
     private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
 
-    // ÉèÖÃ¼üµÄ¹ıÆÚÊ±¼ä
+    // è®¾ç½®é”®çš„è¿‡æœŸæ—¶é—´
     public void setKeyExpiration(String key, long delayInSeconds) {
         long currentTimestamp = System.currentTimeMillis();
         long expirationTimestamp = currentTimestamp + (delayInSeconds * 1000);
@@ -24,7 +24,7 @@ public class delayHash {
 //        System.out.println(keyExpirationMap);
     }
 
-    // ²é¿´¼üµÄÊ£Óà¹ıÆÚÊ±¼ä
+    // æŸ¥çœ‹é”®çš„å‰©ä½™è¿‡æœŸæ—¶é—´
     public long getKeyTtl(String key) {
 //        System.out.println(keyExpirationMap);
         if (keyExpirationMap.containsKey(key)) {
@@ -32,20 +32,20 @@ public class delayHash {
             long expirationTimestamp = keyExpirationMap.get(key);
             long remainingTime = expirationTimestamp - currentTimestamp;
             if (remainingTime > 0) {
-                return remainingTime / 1000; // ×ª»»ÎªÃë
+                return remainingTime / 1000; // è½¬æ¢ä¸ºç§’
             }
         }
-        return -1; // Èç¹û¼ü²»´æÔÚ»òÒÑ¹ıÆÚ£¬Ôò·µ»Ø-1±íÊ¾ÎŞÏŞÊ±¼ä»òÒÑ¹ıÆÚ
+        return -1; // å¦‚æœé”®ä¸å­˜åœ¨æˆ–å·²è¿‡æœŸï¼Œåˆ™è¿”å›-1è¡¨ç¤ºæ— é™æ—¶é—´æˆ–å·²è¿‡æœŸ
     }
     private void handleExpiredKey(String key) {
         keyExpirationMap.remove(key);
 
-        System.out.println("KeyÒÑ¹ıÆÚ£º" + key);
-        // ÔÚÕâÀï¾ÍĞ´°ÑÈ¥µô¶ÔÓ¦µÄkey£¬ÓÉÓÚÃüÁî²»Ò»ÑùÊı¾İ½á¹¹²»Í¬²»»á´æÔÚÒ»ÑùµÄkey£¬ºöÂÔ»º´æ³åÍ»µÄ¿ÉÄÜĞÔ
+        System.out.println("Keyå·²è¿‡æœŸï¼š" + key);
+        // åœ¨è¿™é‡Œå°±å†™æŠŠå»æ‰å¯¹åº”çš„keyï¼Œç”±äºå‘½ä»¤ä¸ä¸€æ ·æ•°æ®ç»“æ„ä¸åŒä¸ä¼šå­˜åœ¨ä¸€æ ·çš„keyï¼Œå¿½ç•¥ç¼“å­˜å†²çªçš„å¯èƒ½æ€§
         HashMap<String, String> hm = SSHashMap.getSSHashMap();
         HashMap<String, LinkedList<String>> hml = SLHashMap.getSLHashMap();
         HashMap<String, HashMap<String, String>> hmh = SHHashMap.getSHHashMap();
-//      ±íÊ¾µ±Ç°ÀïÃæµÚÒ»¸ö¹şÏ£Ã»ÓĞÕâ¸ökey
+//      è¡¨ç¤ºå½“å‰é‡Œé¢ç¬¬ä¸€ä¸ªå“ˆå¸Œæ²¡æœ‰è¿™ä¸ªkey
         if(removeKeyHm(hm,key)==0){
             if(removeKeyHml(hml,key)==0){
                 removeKeyHmh(hmh,key);

@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SAVECommand implements Command {
-//手动强制将缓存在类里面的数据执行写入
+    //鎵嬪姩寮哄埗灏嗙紦瀛樺湪绫婚噷闈㈢殑鏁版嵁鎵ц鍐欏叆
     @Override
     public void setArgs(List<String> list) {
 
@@ -30,7 +30,7 @@ public class SAVECommand implements Command {
     public void execute() {
         Protocol protocol = new Protocol();
         String s ;
-        System.out.println("此时运行的是save命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸save鍛戒护");
         OutputCheck.output();
         s = protocol.encodeServer("", "200");
         MultiWriteHandler.setClient(s);

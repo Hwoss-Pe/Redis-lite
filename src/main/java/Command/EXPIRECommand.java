@@ -23,14 +23,14 @@ public class EXPIRECommand implements Command{
 
     @Override
     public void execute() {
-        System.out.println("此时运行的是expire命令");
+        System.out.println("姝ゆ椂杩愯鐨勬槸expire鍛戒护");
         String s ;
         Protocol protocol = new Protocol();
         if(setArgs.size()<=1){
             s = protocol.encodeServer("", "401");
         }else{
             delayHash delayHash = new delayHash();
-            // 设置键的过期时间
+            // 璁剧疆閿殑杩囨湡鏃堕棿
             String key = setArgs.get(0);
             String expire = setArgs.get(1);
             delayHash.setKeyExpiration(key, Long.parseLong(expire));

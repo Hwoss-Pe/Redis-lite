@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface Command {
     void setArgs(List<String> list);
-//    ±£´æÊäÈëµÄ²ÎÊı
+    //    ä¿å­˜è¾“å…¥çš„å‚æ•°
     void execute();
-//    ×¢Òâ·½·¨µÄ·µ»ØÖµ
+//    æ³¨æ„æ–¹æ³•çš„è¿”å›å€¼
 }

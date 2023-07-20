@@ -21,7 +21,7 @@ public class AutoSave {
     public void execute() {
         Thread saveThread = new Thread(() -> {
             OutputCheck.output();
-            System.out.println("后台保存成功");
+            System.out.println("鍚庡彴淇濆瓨鎴愬姛");
         });
         saveThread.start();
     }

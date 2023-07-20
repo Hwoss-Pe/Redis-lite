@@ -29,7 +29,7 @@ public class SETCommand implements Command {
         }else{
             String key = setArgs.get(0);
             String value = setArgs.get(1);
-            System.out.println("此时运行的是set命令");
+            System.out.println("姝ゆ椂杩愯鐨勬槸set鍛戒护");
             HashMap<String, String> hm = SSHashMap.getSSHashMap();
             hm.put(key, value);
             SSHashMap.setHm(hm);
