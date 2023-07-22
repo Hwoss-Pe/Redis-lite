@@ -24,13 +24,14 @@ flushdb , sadd , smembers , sismember , srem
 
 依赖包括
 
-![](https://pic.imgdb.cn/item/64bbf4da1ddac507cce1393d.jpg)
+![](https://pic.imgdb.cn/item/64bbf7221ddac507cce99c14.jpg)
 
 包括slf4j，logback集成，还有junit测试模块可以省略
 
-maven设置的版本采用和项目一样，而不是在配置环境中采用原本的java1.2
+maven设置的版本采用和项目一样，而不是在配置环境中采用原本的java1.2就行
 
-![](https://pic.imgdb.cn/item/64bbf5c21ddac507cce46567.jpg)
+![](https://pic.imgdb.cn/item/64bbf6cb1ddac507cce858c5.jpg)
+![](https://pic.imgdb.cn/item/64bbf6e61ddac507cce8bb23.jpg)
 
 这里的报错是正常的，保证Maven能够install,并且调用不是默认的jdk
 
@@ -38,7 +39,7 @@ maven设置的版本采用和项目一样，而不是在配置环境中采用原
 
 ## 快速开始
 
-![](https://pic.imgdb.cn/item/64bbed0f1ddac507ccc3c6a7.jpg)
+![](https://pic.imgdb.cn/item/64bbf7681ddac507cceaa52a.jpg)
 
 先运行maven的install，然后需要先运行ProgramServer再运行ProgramClient就可以，如果需要打开多个客户端就在Client类里面设置允许多个实例同时运行
 
