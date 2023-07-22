@@ -101,7 +101,7 @@ class SocketServer {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-//                也就是每十分钟就后台自动保存
+//                也就是1分钟就后台自动保存
                 AutoSave autoSave = new AutoSave();
                 autoSave.execute();
             }

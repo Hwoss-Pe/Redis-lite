@@ -60,8 +60,10 @@ public class MultiWriteHandler {
             if(key != null) {
 //                同一个key去获取通道
                 SocketChannel channel = (SocketChannel) key.channel();
-                Charset charset = StandardCharsets.UTF_8;
+//                Charset charset = StandardCharsets.UTF_8;
+                Charset charset = Charset.forName("GBK");
 //                设置发送信息的编码
+
                 channel.write(charset.encode(message));
             }
         } catch (IOException e) {
