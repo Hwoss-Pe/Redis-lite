@@ -24,7 +24,7 @@ flushdb , sadd , smembers , sismember , srem
 
 依赖包括
 
-![](https://pic.imgdb.cn/item/64bbebd71ddac507ccbf3002.jpg)
+![]([https://pic.imgdb.cn/item/64bbebd71ddac507ccbf3002.jpg](https://pic.imgdb.cn/item/64bbf4da1ddac507cce1393d.jpg))
 
 包括slf4j，logback集成，还有junit测试模块可以省略
 
