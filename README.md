@@ -24,15 +24,15 @@ flushdb , sadd , smembers , sismember , srem
 
 依赖包括
 
-![](https://pic.imgdb.cn/item/64bbebd71ddac507ccbf3002.jpg)
+![](https://pic.imgdb.cn/item/64bbf4da1ddac507cce1393d.jpg)
 
 包括slf4j，logback集成，还有junit测试模块可以省略
 
 maven设置的版本采用和项目一样，而不是在配置环境中采用原本的java1.2
 
-![](https://pic.imgdb.cn/item/64bbec541ddac507ccc10392.jpg)
+![](https://pic.imgdb.cn/item/64bbf5c21ddac507cce46567.jpg)
 
-这里的报错是正常的，保证Maven能够install
+这里的报错是正常的，保证Maven能够install,并且调用不是默认的jdk
 
 项目编码为UTF-8
 
