@@ -15,7 +15,7 @@ public class properties {
         try {
 
 //            创建文件流去读取配置文件，返回一个
-            FileInputStream fileInputStream = new FileInputStream("..\\Test444\\src\\main\\resources\\config.properties");
+            FileInputStream fileInputStream = new FileInputStream("..\\Test4\\src\\main\\resources\\config.properties");
             properties.load(fileInputStream);
             fileInputStream.close();
         } catch (IOException e) {
